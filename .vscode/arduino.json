@@ -1,0 +1,5 @@
+{
+  "sketch": "firmware/seamscope_peripheral/seamscope_peripheral.ino",
+  "board": "arduino:esp32:nano_nora",
+  "output": "firmware/.build"
+}

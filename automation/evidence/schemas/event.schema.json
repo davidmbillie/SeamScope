@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/event.schema.json",
+  "title": "SeamScope normalized event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "eventIndex",
+    "source",
+    "eventType",
+    "hostObservedAt",
+    "details"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "1"},
+    "runId": {"type": "string", "minLength": 1},
+    "eventIndex": {"type": "integer", "minimum": 0},
+    "source": {"enum": ["fixture", "appium", "app", "bumble", "runner"]},
+    "eventType": {
+      "enum": [
+        "run-started",
+        "setup-ready",
+        "stimulus-issued",
+        "command-accepted",
+        "tx",
+        "drop",
+        "malformed",
+        "notification-status",
+        "ble-connected",
+        "ble-disconnected",
+        "app-state",
+        "assertion",
+        "apparatus-reset",
+        "manual-intervention",
+        "run-finished"
+      ]
+    },
+    "hostObservedAt": {"type": "string", "format": "date-time"},
+    "sourceMonotonicMs": {"type": "number", "minimum": 0},
+    "sequence": {"type": "integer", "minimum": 0},
+    "details": {"type": "object"}
+  }
+}

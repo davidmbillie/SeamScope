@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/run-manifest.schema.json",
+  "title": "SeamScope run manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "studyId",
+    "runId",
+    "protocolVersion",
+    "caseId",
+    "route",
+    "repetition",
+    "startedAt",
+    "configurationId",
+    "validityBoundary",
+    "retryOf"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "1"},
+    "studyId": {"type": "string", "minLength": 1},
+    "runId": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"},
+    "protocolVersion": {"type": "string", "minLength": 1},
+    "caseId": {
+      "enum": [
+        "healthy-threshold",
+        "dropped-notification-recovery",
+        "malformed-notification",
+        "stale-sequence"
+      ]
+    },
+    "route": {"enum": ["injected", "bumble-ble", "tablet-ble"]},
+    "repetition": {"type": "integer", "minimum": 1},
+    "startedAt": {"type": "string", "format": "date-time"},
+    "configurationId": {"type": "string", "minLength": 1},
+    "validityBoundary": {"const": "stimulus-issued"},
+    "retryOf": {"type": ["string", "null"]}
+  }
+}

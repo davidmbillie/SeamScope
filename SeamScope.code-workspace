@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "name": "SeamScope",
+      "path": "."
+    },
+    {
+      "name": "IST paper",
+      "path": "../ist"
+    }
+  ],
+  "settings": {
+    "workbench.editor.labelFormat": "medium"
+  }
+}

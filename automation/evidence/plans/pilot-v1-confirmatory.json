@@ -1,0 +1,523 @@
+{
+  "schemaVersion": "1",
+  "planId": "pilot-v1-confirmatory",
+  "protocolVersion": "pilot-v1-frozen",
+  "status": "frozen",
+  "orderingRule": "Ten five-run blocks: each primary condition occurs once per block, followed by one alternating tablet reference run.",
+  "targets": {
+    "validRuns": 50,
+    "primaryValidRuns": 40,
+    "referenceValidRuns": 10,
+    "byCondition": {
+      "injected-healthy": 10,
+      "bumble-healthy": 10,
+      "bumble-dropped": 10,
+      "bumble-malformed": 10,
+      "tablet-healthy": 5,
+      "tablet-malformed": 5
+    }
+  },
+  "retryRule": "Invalid pre-stimulus attempts receive a new run ID and do not advance the planned sequence; valid failures do.",
+  "schedule": [
+    {
+      "sequence": 1,
+      "block": 1,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 1,
+      "plannedRunId": "c001-injected-healthy-r01"
+    },
+    {
+      "sequence": 2,
+      "block": 1,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 1,
+      "plannedRunId": "c002-bumble-healthy-r01"
+    },
+    {
+      "sequence": 3,
+      "block": 1,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 1,
+      "plannedRunId": "c003-bumble-dropped-r01"
+    },
+    {
+      "sequence": 4,
+      "block": 1,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 1,
+      "plannedRunId": "c004-bumble-malformed-r01"
+    },
+    {
+      "sequence": 5,
+      "block": 1,
+      "role": "reference",
+      "conditionId": "tablet-healthy",
+      "route": "tablet-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 1,
+      "plannedRunId": "c005-tablet-healthy-r01"
+    },
+    {
+      "sequence": 6,
+      "block": 2,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 2,
+      "plannedRunId": "c006-bumble-healthy-r02"
+    },
+    {
+      "sequence": 7,
+      "block": 2,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 2,
+      "plannedRunId": "c007-bumble-dropped-r02"
+    },
+    {
+      "sequence": 8,
+      "block": 2,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 2,
+      "plannedRunId": "c008-bumble-malformed-r02"
+    },
+    {
+      "sequence": 9,
+      "block": 2,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 2,
+      "plannedRunId": "c009-injected-healthy-r02"
+    },
+    {
+      "sequence": 10,
+      "block": 2,
+      "role": "reference",
+      "conditionId": "tablet-malformed",
+      "route": "tablet-ble",
+      "caseId": "malformed-notification",
+      "repetition": 1,
+      "plannedRunId": "c010-tablet-malformed-r01"
+    },
+    {
+      "sequence": 11,
+      "block": 3,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 3,
+      "plannedRunId": "c011-bumble-dropped-r03"
+    },
+    {
+      "sequence": 12,
+      "block": 3,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 3,
+      "plannedRunId": "c012-bumble-malformed-r03"
+    },
+    {
+      "sequence": 13,
+      "block": 3,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 3,
+      "plannedRunId": "c013-injected-healthy-r03"
+    },
+    {
+      "sequence": 14,
+      "block": 3,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 3,
+      "plannedRunId": "c014-bumble-healthy-r03"
+    },
+    {
+      "sequence": 15,
+      "block": 3,
+      "role": "reference",
+      "conditionId": "tablet-healthy",
+      "route": "tablet-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 2,
+      "plannedRunId": "c015-tablet-healthy-r02"
+    },
+    {
+      "sequence": 16,
+      "block": 4,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 4,
+      "plannedRunId": "c016-bumble-malformed-r04"
+    },
+    {
+      "sequence": 17,
+      "block": 4,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 4,
+      "plannedRunId": "c017-injected-healthy-r04"
+    },
+    {
+      "sequence": 18,
+      "block": 4,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 4,
+      "plannedRunId": "c018-bumble-healthy-r04"
+    },
+    {
+      "sequence": 19,
+      "block": 4,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 4,
+      "plannedRunId": "c019-bumble-dropped-r04"
+    },
+    {
+      "sequence": 20,
+      "block": 4,
+      "role": "reference",
+      "conditionId": "tablet-malformed",
+      "route": "tablet-ble",
+      "caseId": "malformed-notification",
+      "repetition": 2,
+      "plannedRunId": "c020-tablet-malformed-r02"
+    },
+    {
+      "sequence": 21,
+      "block": 5,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 5,
+      "plannedRunId": "c021-injected-healthy-r05"
+    },
+    {
+      "sequence": 22,
+      "block": 5,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 5,
+      "plannedRunId": "c022-bumble-healthy-r05"
+    },
+    {
+      "sequence": 23,
+      "block": 5,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 5,
+      "plannedRunId": "c023-bumble-dropped-r05"
+    },
+    {
+      "sequence": 24,
+      "block": 5,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 5,
+      "plannedRunId": "c024-bumble-malformed-r05"
+    },
+    {
+      "sequence": 25,
+      "block": 5,
+      "role": "reference",
+      "conditionId": "tablet-healthy",
+      "route": "tablet-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 3,
+      "plannedRunId": "c025-tablet-healthy-r03"
+    },
+    {
+      "sequence": 26,
+      "block": 6,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 6,
+      "plannedRunId": "c026-bumble-healthy-r06"
+    },
+    {
+      "sequence": 27,
+      "block": 6,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 6,
+      "plannedRunId": "c027-bumble-dropped-r06"
+    },
+    {
+      "sequence": 28,
+      "block": 6,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 6,
+      "plannedRunId": "c028-bumble-malformed-r06"
+    },
+    {
+      "sequence": 29,
+      "block": 6,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 6,
+      "plannedRunId": "c029-injected-healthy-r06"
+    },
+    {
+      "sequence": 30,
+      "block": 6,
+      "role": "reference",
+      "conditionId": "tablet-malformed",
+      "route": "tablet-ble",
+      "caseId": "malformed-notification",
+      "repetition": 3,
+      "plannedRunId": "c030-tablet-malformed-r03"
+    },
+    {
+      "sequence": 31,
+      "block": 7,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 7,
+      "plannedRunId": "c031-bumble-dropped-r07"
+    },
+    {
+      "sequence": 32,
+      "block": 7,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 7,
+      "plannedRunId": "c032-bumble-malformed-r07"
+    },
+    {
+      "sequence": 33,
+      "block": 7,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 7,
+      "plannedRunId": "c033-injected-healthy-r07"
+    },
+    {
+      "sequence": 34,
+      "block": 7,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 7,
+      "plannedRunId": "c034-bumble-healthy-r07"
+    },
+    {
+      "sequence": 35,
+      "block": 7,
+      "role": "reference",
+      "conditionId": "tablet-healthy",
+      "route": "tablet-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 4,
+      "plannedRunId": "c035-tablet-healthy-r04"
+    },
+    {
+      "sequence": 36,
+      "block": 8,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 8,
+      "plannedRunId": "c036-bumble-malformed-r08"
+    },
+    {
+      "sequence": 37,
+      "block": 8,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 8,
+      "plannedRunId": "c037-injected-healthy-r08"
+    },
+    {
+      "sequence": 38,
+      "block": 8,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 8,
+      "plannedRunId": "c038-bumble-healthy-r08"
+    },
+    {
+      "sequence": 39,
+      "block": 8,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 8,
+      "plannedRunId": "c039-bumble-dropped-r08"
+    },
+    {
+      "sequence": 40,
+      "block": 8,
+      "role": "reference",
+      "conditionId": "tablet-malformed",
+      "route": "tablet-ble",
+      "caseId": "malformed-notification",
+      "repetition": 4,
+      "plannedRunId": "c040-tablet-malformed-r04"
+    },
+    {
+      "sequence": 41,
+      "block": 9,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 9,
+      "plannedRunId": "c041-injected-healthy-r09"
+    },
+    {
+      "sequence": 42,
+      "block": 9,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 9,
+      "plannedRunId": "c042-bumble-dropped-r09"
+    },
+    {
+      "sequence": 43,
+      "block": 9,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 9,
+      "plannedRunId": "c043-bumble-healthy-r09"
+    },
+    {
+      "sequence": 44,
+      "block": 9,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 9,
+      "plannedRunId": "c044-bumble-malformed-r09"
+    },
+    {
+      "sequence": 45,
+      "block": 9,
+      "role": "reference",
+      "conditionId": "tablet-healthy",
+      "route": "tablet-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 5,
+      "plannedRunId": "c045-tablet-healthy-r05"
+    },
+    {
+      "sequence": 46,
+      "block": 10,
+      "role": "primary",
+      "conditionId": "bumble-dropped",
+      "route": "bumble-ble",
+      "caseId": "dropped-notification-recovery",
+      "repetition": 10,
+      "plannedRunId": "c046-bumble-dropped-r10"
+    },
+    {
+      "sequence": 47,
+      "block": 10,
+      "role": "primary",
+      "conditionId": "injected-healthy",
+      "route": "injected",
+      "caseId": "healthy-threshold",
+      "repetition": 10,
+      "plannedRunId": "c047-injected-healthy-r10"
+    },
+    {
+      "sequence": 48,
+      "block": 10,
+      "role": "primary",
+      "conditionId": "bumble-malformed",
+      "route": "bumble-ble",
+      "caseId": "malformed-notification",
+      "repetition": 10,
+      "plannedRunId": "c048-bumble-malformed-r10"
+    },
+    {
+      "sequence": 49,
+      "block": 10,
+      "role": "primary",
+      "conditionId": "bumble-healthy",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "repetition": 10,
+      "plannedRunId": "c049-bumble-healthy-r10"
+    },
+    {
+      "sequence": 50,
+      "block": 10,
+      "role": "reference",
+      "conditionId": "tablet-malformed",
+      "route": "tablet-ble",
+      "caseId": "malformed-notification",
+      "repetition": 5,
+      "plannedRunId": "c050-tablet-malformed-r05"
+    }
+  ]
+}

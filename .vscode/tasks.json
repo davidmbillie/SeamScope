@@ -1,0 +1,249 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Mobile: Start Metro",
+      "type": "shell",
+      "command": "npm",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "mobile",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Mobile: Run Android on device",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "android",
+        "--",
+        "--deviceId",
+        "${input:androidDeviceId}",
+        "--active-arch-only"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile",
+        "env": {
+          "ANDROID_HOME": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "ANDROID_SDK_ROOT": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "JAVA_HOME": "C:\\Program Files\\Android\\Android Studio\\jbr",
+          "PATH": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools;C:\\Program Files\\Android\\Android Studio\\jbr\\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "group": "mobile",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Mobile: Unit tests",
+      "type": "shell",
+      "command": "npx",
+      "args": ["jest", "--runInBand"],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Mobile: Lint",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "lint"],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile"
+      },
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "Mobile: Typecheck",
+      "type": "shell",
+      "command": "npx",
+      "args": ["tsc", "--noEmit"],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile"
+      },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Android: Assemble emulator debug APK",
+      "type": "shell",
+      "command": ".\\gradlew.bat",
+      "args": [
+        "assembleDebug",
+        "--no-daemon",
+        "--max-workers=1",
+        "-Dorg.gradle.jvmargs=-Xmx1024m -XX:MaxMetaspaceSize=384m",
+        "-PreactNativeArchitectures=x86_64"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile/android",
+        "env": {
+          "ANDROID_HOME": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "ANDROID_SDK_ROOT": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "JAVA_HOME": "C:\\Program Files\\Android\\Android Studio\\jbr"
+        }
+      },
+      "problemMatcher": ["$gradle"]
+    },
+    {
+      "label": "Android: Assemble ARM64 device debug APK",
+      "type": "shell",
+      "command": ".\\gradlew.bat",
+      "args": [
+        "assembleDebug",
+        "--no-daemon",
+        "--max-workers=1",
+        "-Dorg.gradle.jvmargs=-Xmx1024m -XX:MaxMetaspaceSize=384m",
+        "-PreactNativeArchitectures=arm64-v8a"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile/android",
+        "env": {
+          "ANDROID_HOME": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "ANDROID_SDK_ROOT": "${env:LOCALAPPDATA}\\Android\\Sdk",
+          "JAVA_HOME": "C:\\Program Files\\Android\\Android Studio\\jbr"
+        }
+      },
+      "problemMatcher": ["$gradle"]
+    },
+    {
+      "label": "Android: List devices",
+      "type": "process",
+      "command": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools\\adb.exe",
+      "args": ["devices", "-l"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: List emulators",
+      "type": "process",
+      "command": "${env:LOCALAPPDATA}\\Android\\Sdk\\emulator\\emulator.exe",
+      "args": ["-list-avds"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Automation: Typecheck",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "typecheck"],
+      "options": {
+        "cwd": "${workspaceFolder}/automation"
+      },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Automation: Injected Appium scenario",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:e2e"],
+      "options": {
+        "cwd": "${workspaceFolder}/automation",
+        "env": {
+          "SEAMSCOPE_RIG": "injected",
+          "SEAMSCOPE_DEVICE_UDID": "${input:androidDeviceId}",
+          "SEAMSCOPE_DEVICE_NAME": "Seam Tab"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Automation: Physical serial/BLE Appium scenario",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:e2e"],
+      "options": {
+        "cwd": "${workspaceFolder}/automation",
+        "env": {
+          "SEAMSCOPE_RIG": "serial",
+          "SEAMSCOPE_SERIAL_PORT": "${input:serialPort}",
+          "SEAMSCOPE_DEVICE_UDID": "${input:androidDeviceId}",
+          "SEAMSCOPE_DEVICE_NAME": "Seam Tab"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Firmware: Compile Nano ESP32",
+      "type": "process",
+      "command": "C:\\Program Files\\Arduino CLI\\arduino-cli.exe",
+      "args": ["compile", "--profile", "nano_esp32", "."],
+      "options": {
+        "cwd": "${workspaceFolder}/firmware/seamscope_peripheral"
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Firmware: Compile and upload",
+      "type": "process",
+      "command": "C:\\Program Files\\Arduino CLI\\arduino-cli.exe",
+      "args": [
+        "compile",
+        "--upload",
+        "--profile",
+        "nano_esp32",
+        "--port",
+        "${input:serialPort}",
+        "."
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/firmware/seamscope_peripheral"
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Firmware: Serial monitor",
+      "type": "process",
+      "command": "C:\\Program Files\\Arduino CLI\\arduino-cli.exe",
+      "args": [
+        "monitor",
+        "--port",
+        "${input:serialPort}",
+        "--config",
+        "baudrate=115200"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "group": "firmware",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "SeamScope: Verify source",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Mobile: Unit tests",
+        "Mobile: Lint",
+        "Mobile: Typecheck",
+        "Automation: Typecheck",
+        "Firmware: Compile Nano ESP32"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "androidDeviceId",
+      "type": "promptString",
+      "description": "Android device ID from adb devices",
+      "default": "<TABLET_SERIAL>"
+    },
+    {
+      "id": "serialPort",
+      "type": "promptString",
+      "description": "Arduino serial port",
+      "default": "COM3"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "typescript.tsdk": "apps/mobile/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.workingDirectories": [
+    "apps/mobile"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "jest.rootPath": "apps/mobile",
+  "jest.jestCommandLine": "node_modules/.bin/jest --runInBand",
+  "arduino.useArduinoCli": true,
+  "arduino.path": "C:\\Program Files\\Arduino CLI",
+  "arduino.commandPath": "arduino-cli.exe",
+  "arduino.clearOutputOnBuild": true,
+  "arduino.logLevel": "info",
+  "files.associations": {
+    "*.ino": "cpp"
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.gradle/**": true,
+    "**/android/build/**": true,
+    "**/android/app/build/**": true
+  },
+  "terminal.integrated.env.windows": {
+    "ANDROID_HOME": "${env:LOCALAPPDATA}\\Android\\Sdk",
+    "ANDROID_SDK_ROOT": "${env:LOCALAPPDATA}\\Android\\Sdk",
+    "JAVA_HOME": "C:\\Program Files\\Android\\Android Studio\\jbr",
+    "PATH": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools;${env:LOCALAPPDATA}\\Android\\Sdk\\emulator;C:\\Program Files\\Android\\Android Studio\\jbr\\bin;${env:PATH}"
+  }
+}

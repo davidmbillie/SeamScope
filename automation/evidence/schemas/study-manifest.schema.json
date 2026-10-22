@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/study-manifest.schema.json",
+  "title": "SeamScope study manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "studyId",
+    "protocolVersion",
+    "protocolStatus",
+    "createdAt",
+    "intendedResult",
+    "repetitionTarget",
+    "repetitionTargetStatus",
+    "timeoutStatus",
+    "timeoutsMs",
+    "cases",
+    "primaryRoutes",
+    "referenceRoute",
+    "validityBoundary",
+    "orderingRule",
+    "environment",
+    "artifactHashes"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "1"},
+    "studyId": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"},
+    "protocolVersion": {"type": "string", "minLength": 1},
+    "protocolStatus": {
+      "enum": ["draft-calibration", "frozen", "superseded"]
+    },
+    "createdAt": {"type": "string", "format": "date-time"},
+    "intendedResult": {"const": "structural-evidence-distinction"},
+    "repetitionTarget": {"type": "integer", "minimum": 1},
+    "repetitionTargetStatus": {
+      "enum": ["calibration-default", "frozen"]
+    },
+    "timeoutStatus": {
+      "enum": ["pending-dry-run-calibration", "frozen"]
+    },
+    "timeoutsMs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readiness", "postStimulus"],
+      "properties": {
+        "readiness": {"type": ["integer", "null"], "minimum": 1},
+        "postStimulus": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "cases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/caseId"}
+    },
+    "primaryRoutes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/route"}
+    },
+    "referenceRoute": {"$ref": "#/$defs/route"},
+    "validityBoundary": {"const": "stimulus-issued"},
+    "orderingRule": {"const": "balanced-alternation"},
+    "environment": {"type": "object"},
+    "artifactHashes": {"type": "object"}
+  },
+  "$defs": {
+    "caseId": {
+      "enum": [
+        "healthy-threshold",
+        "dropped-notification-recovery",
+        "malformed-notification",
+        "stale-sequence"
+      ]
+    },
+    "route": {"enum": ["injected", "bumble-ble", "tablet-ble"]}
+  }
+}

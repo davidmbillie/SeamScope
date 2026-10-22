@@ -1,0 +1,5 @@
+profiles:
+  nano_esp32:
+    fqbn: arduino:esp32:nano_nora
+
+default_profile: nano_esp32

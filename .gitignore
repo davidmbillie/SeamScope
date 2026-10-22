@@ -1,0 +1,26 @@
+node_modules/
+automation/node_modules/
+apps/mobile/node_modules/
+apps/mobile/android/.gradle/
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+apps/mobile/ios/Pods/
+# The first research milestone is Android-only. Keep the generated iOS and
+# Bundler scaffolding local until that platform enters the validated scope.
+apps/mobile/ios/
+apps/mobile/.bundle/
+artifacts/
+*.log
+.DS_Store
+.idea/
+.vscode/
+!.vscode/
+!.vscode/arduino.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+.vscode/.react/
+# Arduino CLI/IDE output may be nested below an individual sketch.
+firmware/**/.build/
+.cache/

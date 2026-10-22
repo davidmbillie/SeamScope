@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/verdict.schema.json",
+  "title": "SeamScope run verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "validity",
+    "outcome",
+    "expectedObservation",
+    "observedObservation",
+    "claimSupported",
+    "failureBoundary",
+    "manualIntervention",
+    "retryOf",
+    "notes"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "1"},
+    "runId": {"type": "string", "minLength": 1},
+    "validity": {"enum": ["valid", "invalid"]},
+    "outcome": {"enum": ["pass", "fail", "not-evaluated"]},
+    "expectedObservation": {"type": "string", "minLength": 1},
+    "observedObservation": {"type": "string", "minLength": 1},
+    "claimSupported": {"type": "string", "minLength": 1},
+    "failureBoundary": {
+      "enum": ["none", "fixture", "ble", "application", "ui", "executor", "unknown"]
+    },
+    "manualIntervention": {"type": "boolean"},
+    "retryOf": {"type": ["string", "null"]},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"validity": {"const": "invalid"}}},
+      "then": {"properties": {"outcome": {"const": "not-evaluated"}}}
+    }
+  ]
+}
