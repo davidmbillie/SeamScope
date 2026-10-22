@@ -9,6 +9,34 @@ The CLI deliberately does not launch the emulator, Appium, Bumble, or the
 fixture. It establishes the record boundary into which those processes will be
 wired after dry-run calibration.
 
+## Progressive disclosure
+
+The evidence is organized so that a reader does not need to inspect granular
+system logs to understand a reported result:
+
+1. the manuscript reports condition-level findings;
+2. derived summaries report the values behind those findings;
+3. each run's `manifest.json`, `events.jsonl`, and `verdict.json` expose the
+   normalized evidence and decision;
+4. screenshots and route-specific raw logs support deeper audit; and
+5. the untouched private capture remains the forensic source from which a
+   sanitized release package can be generated.
+
+The committed freeze record is
+[`freezes/pilot-v1.json`](freezes/pilot-v1.json). It contains the portable
+identity of the frozen study, hashes of the execution artifacts, relevant tool
+and platform versions, and the first corresponding Git baseline. It is not the
+canonical machine capture and does not claim that the study was executed from
+a commit created after collection began.
+
+The canonical private record remains at
+`artifacts/evidence/pilot-v1/freeze-metadata.json`, beneath the repository's
+ignored `artifacts/` tree. It is preserved unchanged. The committed record
+excludes unique device and controller serials, ephemeral Android and serial
+port addresses, and absolute local paths. Repository-controlled paths are
+relative. Full logs and executable binaries are also excluded from Git; their
+hashes bind them to the freeze record.
+
 ## Commands
 
 Run commands from `automation`.
@@ -73,13 +101,14 @@ node .\scripts\evidence-cli.mjs validate-run --run <run-directory>
 - A verdict cannot overwrite an earlier verdict.
 - Bumble logs are required only for the Bumble-backed route.
 
-The next integration slice will stream serial, Appium, logcat, and Bumble logs
-into the active run, add checkpoint screenshots/UI hierarchies, and measure the
-two latency domains used for timeout calibration.
+The managed runner integrates serial, Appium, logcat, and applicable Bumble
+output with normalized events, screenshots, manifests, and verdicts. These
+layers remain separate so setup validity, application behavior, and
+infrastructure diagnostics are not collapsed into one undifferentiated log.
 
 ## Schemas
 
-The JSON Schema files in `schemas/` define the version-1 contracts. The current
-store performs core invariant checks without an external validation package.
-Schema validation can be added to the collection-completeness gate without
-changing the stored representation.
+The JSON Schema files in `schemas/` define the version-1 contracts, including
+the sanitized freeze record. The current store performs core invariant checks
+without an external validation package. Schema validation can be added to the
+collection-completeness gate without changing the stored representation.

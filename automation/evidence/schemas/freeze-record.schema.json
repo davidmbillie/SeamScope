@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/freeze-record.schema.json",
+  "title": "SeamScope sanitized freeze record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "studyId",
+    "protocol",
+    "freeze",
+    "environment",
+    "artifacts",
+    "privacy"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": "1"},
+    "studyId": {"type": "string", "minLength": 1},
+    "protocol": {
+      "type": "object",
+      "required": [
+        "version",
+        "status",
+        "intendedResult",
+        "cases",
+        "primaryRoutes",
+        "referenceRoute",
+        "validRunTargets",
+        "timeoutsMs",
+        "validityBoundary",
+        "orderingRule"
+      ]
+    },
+    "freeze": {
+      "type": "object",
+      "required": ["capturedAt", "sourceState", "gitBaseline"],
+      "properties": {
+        "capturedAt": {"type": "string", "format": "date-time"},
+        "sourceState": {
+          "type": "object",
+          "required": ["kind", "algorithm", "fileCount", "sha256"]
+        },
+        "gitBaseline": {
+          "type": "object",
+          "required": ["commit", "relationship", "statement"],
+          "properties": {
+            "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "relationship": {"const": "post-freeze-corresponding-baseline"},
+            "statement": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "environment": {"type": "object"},
+    "artifacts": {"type": "object"},
+    "privacy": {
+      "type": "object",
+      "required": ["pathPolicy", "excludedFields", "canonicalPrivateRecord"],
+      "properties": {
+        "pathPolicy": {"type": "string", "minLength": 1},
+        "excludedFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "canonicalPrivateRecord": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

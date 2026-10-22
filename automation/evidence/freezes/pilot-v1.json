@@ -1,0 +1,157 @@
+{
+  "$schema": "../schemas/freeze-record.schema.json",
+  "schemaVersion": "1",
+  "studyId": "pilot-v1",
+  "protocol": {
+    "version": "pilot-v1-frozen",
+    "status": "frozen",
+    "intendedResult": "structural-evidence-distinction",
+    "cases": [
+      "healthy-threshold",
+      "dropped-notification-recovery",
+      "malformed-notification"
+    ],
+    "primaryRoutes": [
+      "injected",
+      "bumble-ble"
+    ],
+    "referenceRoute": "tablet-ble",
+    "validRunTargets": {
+      "primary": 40,
+      "tabletReference": 10,
+      "total": 50
+    },
+    "timeoutsMs": {
+      "readiness": 8000,
+      "postStimulus": 2000
+    },
+    "validityBoundary": "stimulus-issued",
+    "orderingRule": "balanced-alternation"
+  },
+  "freeze": {
+    "capturedAt": "2026-10-22T13:52:25.0436786Z",
+    "sourceState": {
+      "kind": "uncommitted-hash-snapshot",
+      "algorithm": "sha256-of-sorted-sha256-path-inventory",
+      "fileCount": 118,
+      "sha256": "b51ed149597050f798efb878526fa020b0a40c75272b260fab8e2ceb13d6be6c"
+    },
+    "gitBaseline": {
+      "commit": "257702d1ad8c3a246540279145b4cd6a282b0aff",
+      "relationship": "post-freeze-corresponding-baseline",
+      "statement": "This is the first Git baseline corresponding to the frozen SeamScope source. It was created after the freeze capture and is not represented as an execution-time commit."
+    }
+  },
+  "environment": {
+    "host": {
+      "os": "Microsoft Windows NT 10.0.26200.0",
+      "powershell": "5.1.26100.9711",
+      "node": "v24.2.0",
+      "npm": "11.3.0",
+      "shellDefaultJava": "openjdk 11.0.16.1",
+      "androidBuildJava": "OpenJDK 17.0.6+0-b2043.56-10027231"
+    },
+    "automation": {
+      "appium": "3.7.0",
+      "appiumUiautomator2Driver": "8.7.0",
+      "webdriverio": "9.31.9",
+      "wdioCli": "9.31.9",
+      "typescript": "5.9.3",
+      "bumble": "0.0.179.dev18+g9bf2e03",
+      "adb": {
+        "protocolVersion": "1.0.41",
+        "buildVersion": "34.0.5-10900879"
+      },
+      "androidEmulator": "33.1.21.0 (build 11009868)",
+      "arduinoCli": "1.5.1 (commit 01f3d4f2b)",
+      "arduinoEsp32Core": "2.0.13"
+    },
+    "androidTargets": {
+      "emulator": {
+        "model": "sdk_gphone64_x86_64",
+        "release": "14",
+        "sdk": "34",
+        "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.030/10921827:userdebug/dev-keys"
+      },
+      "tablet": {
+        "model": "SM-T220",
+        "release": "14",
+        "sdk": "34",
+        "fingerprint": "samsung/gta7litewifixx/gta7litewifi:14/UP1A.231005.007/T220XXSAEYE4:user/release-keys"
+      }
+    },
+    "fixture": {
+      "board": "Arduino Nano ESP32",
+      "serialControlPort": "runtime-configured",
+      "baudRate": 115200
+    },
+    "bumbleBridge": {
+      "hostTransport": "android-netsim:_:8877,mode=controller",
+      "controller": {
+        "usbVendorId": "0B05",
+        "usbProductId": "190E"
+      }
+    },
+    "emulatorLaunch": {
+      "avd": "Pixel_6",
+      "packetStreamerEndpoint": "localhost:8877",
+      "metroDebugHost": "127.0.0.1:8081 via adb reverse",
+      "headless": true,
+      "gpu": "swiftshader_indirect",
+      "snapshot": "disabled"
+    }
+  },
+  "artifacts": {
+    "applicationApk": {
+      "availability": "private-freeze-artifact",
+      "sha256": "b4e95c55c29e19a54f084e92afac6df498fe440a9e903f1137ea9825d1c74ff8",
+      "bytes": 38615629
+    },
+    "firmwareSource": {
+      "path": "firmware/seamscope_peripheral/seamscope_peripheral.ino",
+      "sha256": "d68475e739cd416ddcecb21cfdf8d77abeb20b4468e4ae4de8dbf9a62a6f3921",
+      "bytes": 5235
+    },
+    "runPlan": {
+      "path": "automation/evidence/plans/pilot-v1-confirmatory.json",
+      "sha256": "837057f001d0d46a668d6fa4685f7f35e17a26ae5dc3695df6d281ceb68919eb",
+      "bytes": 13705
+    },
+    "automationLock": {
+      "path": "automation/package-lock.json",
+      "sha256": "8c772bb8e4457c56eb3ccf34fba7dad6e3a4953225dfc2cec6ebb69e4615c501",
+      "bytes": 449851
+    },
+    "mobileLock": {
+      "path": "apps/mobile/package-lock.json",
+      "sha256": "8dfc776d7be35319732637aa5063dcd63928dd83aa5560daf5918f2db205fff8",
+      "bytes": 451919
+    },
+    "firmwareApplicationBinary": {
+      "availability": "private-freeze-artifact",
+      "sha256": "af6fd9cc650f3cf60b2a0021cb75b101d9d816150ee945d27bddbe6bca81708a",
+      "bytes": 910112
+    },
+    "firmwareBootloaderBinary": {
+      "availability": "private-freeze-artifact",
+      "sha256": "d0b02b860147ace6a607985a3123a977b9451fa5d54a24ca6db59be4a2e4c345",
+      "bytes": 15088
+    },
+    "firmwarePartitionsBinary": {
+      "availability": "private-freeze-artifact",
+      "sha256": "a8ed437803d579ea4db97d60e6b2eac9fc8a8ffadf6cfdcd2493130b17144e40",
+      "bytes": 3072
+    }
+  },
+  "privacy": {
+    "pathPolicy": "Repository-controlled paths are relative; machine-specific absolute paths are omitted from this committed record.",
+    "excludedFields": [
+      "physical Android device serial",
+      "USB Bluetooth controller serial",
+      "ephemeral Android target serial",
+      "physical serial-port number",
+      "absolute repository, Android SDK, emulator-home, and AVD-home paths"
+    ],
+    "canonicalPrivateRecord": "artifacts/evidence/pilot-v1/freeze-metadata.json"
+  }
+}
