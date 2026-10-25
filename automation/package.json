@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit:evidence": "node ./scripts/audit-evidence.mjs",
+    "audit:evidence:strict": "node ./scripts/audit-evidence.mjs --strict",
     "plan:generate": "node ./scripts/generate-run-plan.mjs",
     "results:summarize": "node ./scripts/summarize-evidence.mjs",
     "test:e2e": "wdio run ./wdio.conf.ts",
@@ -20,6 +22,8 @@
     "@wdio/mocha-framework": "^9.31.9",
     "@wdio/spec-reporter": "^9.31.2",
     "@wdio/types": "^9.31.2",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
     "appium": "^3.7.0",
     "appium-uiautomator2-driver": "^8.7.0",
     "typescript": "^5.9.3",

@@ -31,6 +31,7 @@
       "enum": ["draft-calibration", "frozen", "superseded"]
     },
     "createdAt": {"type": "string", "format": "date-time"},
+    "frozenAt": {"type": "string", "format": "date-time"},
     "intendedResult": {"const": "structural-evidence-distinction"},
     "repetitionTarget": {"type": "integer", "minimum": 1},
     "repetitionTargetStatus": {

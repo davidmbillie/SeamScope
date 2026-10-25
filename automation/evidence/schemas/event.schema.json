@@ -19,6 +19,7 @@
     "eventIndex": {"type": "integer", "minimum": 0},
     "source": {"enum": ["fixture", "appium", "app", "bumble", "runner"]},
     "eventType": {
+      "$comment": "malform is the legacy v1 token emitted from MALFORM fixture lines; malformed is the canonical vocabulary term.",
       "enum": [
         "run-started",
         "setup-ready",
@@ -26,6 +27,7 @@
         "command-accepted",
         "tx",
         "drop",
+        "malform",
         "malformed",
         "notification-status",
         "ble-connected",

@@ -103,6 +103,19 @@ calibration/diagnostic runs, setup validity, and post-stimulus outcomes remain
 separate. The output is ignored by Git until the later sanitization and release
 packaging step.
 
+Run the evidence-integrity audit and generate the private checksum inventory:
+
+```powershell
+npm run audit:evidence
+```
+
+Use `npm run audit:evidence:strict` when an unresolved integrity error should
+produce a non-zero exit status. Warnings and documented observations remain in
+the report without making the ordinary reporting command fail. The generated
+report and SHA-256 inventory are written beneath
+`artifacts/evidence/pilot-v1/derived/integrity-audit` and remain ignored until
+the sanitized package is assembled.
+
 ## Invariants already enforced
 
 - Run identifiers and run directories cannot be silently overwritten.
