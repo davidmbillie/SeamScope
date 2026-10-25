@@ -90,6 +90,19 @@ Validate completeness and run-local event ordering:
 node .\scripts\evidence-cli.mjs validate-run --run <run-directory>
 ```
 
+Generate the private, deterministic interim result package from the frozen
+plan and immutable run records:
+
+```powershell
+npm run results:summarize
+```
+
+The command writes CSV, JSON, and a compact reader guide beneath
+`artifacts/evidence/pilot-v1/derived/interim-results`. Confirmatory attempts,
+calibration/diagnostic runs, setup validity, and post-stimulus outcomes remain
+separate. The output is ignored by Git until the later sanitization and release
+packaging step.
+
 ## Invariants already enforced
 
 - Run identifiers and run directories cannot be silently overwritten.

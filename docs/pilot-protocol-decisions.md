@@ -579,7 +579,6 @@ the declared 8,000 ms subscription and 2,000 ms post-stimulus bounds. It also
 strengthens the earlier localization result: the same Nano, firmware, serial
 stimulus channel, and application behavior completed repeatedly when the
 emulator/Bumble/USB-controller layers were absent. It does not identify a root
-cause within those hybrid layers, estimate comparative failure rates, or clear
 cause within those hybrid layers or estimate comparative failure rates.
 
 A final clean-pair hybrid qualification on 2026-10-22 removed the stale
@@ -599,4 +598,37 @@ toward the valid-run target, and three consecutive recurrences of the same
 setup condition stop collection for diagnosis. Valid failures after the
 stimulus boundary do count. This avoids selecting a conveniently stable window
 while preserving a bounded operational stop rule.
+
+## Confirmatory checkpoint and stop-rule diagnosis
+
+The first confirmatory collection session on 2026-10-22 produced 19 immutable
+attempt records spanning 14 scheduled positions. Thirteen positions completed
+with valid runs, all of which passed; six attempts were invalid before the
+stimulus boundary and therefore were not SUT failures and did not advance the
+schedule. Five invalid attempts localized to the BLE boundary and one to the
+application boundary. No valid confirmatory failure has yet been observed.
+
+Sequence 14 (`c014-bumble-healthy-r03`) and both permitted retries ended at the
+same pre-stimulus BLE setup boundary. The third recurrence activated the frozen
+stop rule. Sequence 14 therefore remains incomplete, sequence 15 was not
+started, and the collection remains stopped for diagnosis rather than complete.
+These counts come from the study manifest, frozen plan, run manifests, event
+streams, and verdict files—not from directory names alone.
+
+Three later isolation runs form a separate diagnostic stratum and do not alter
+the confirmatory ledger. `calibration-isolation-tablet-005` was a valid pass on
+the physical tablet route, with subscription at 2,444 ms, motion observable
+991 ms after stimulus, and the completed interval observable 1,571 ms after
+stop. In contrast, `calibration-isolation-bumble-001` and `002` were invalid at
+the BLE setup boundary and issued no stimulus. The first remained at
+`REQUESTING-PERMISSION` through the subscription bound despite retained
+permission and link evidence; the warm retry reached `CONNECTING` but not
+`SUBSCRIBED` within the bound.
+
+The diagnostic contrast supports boundary localization: the same physical
+fixture and application behavior remained exercisable through the tablet route
+while the emulator/Bumble route did not repeatedly establish GATT readiness.
+It does not establish a component root cause, estimate a route failure rate, or
+convert either diagnostic invalid into a confirmatory result. The frozen
+timeouts, validity boundary, retry rule, and target counts are unchanged.
 

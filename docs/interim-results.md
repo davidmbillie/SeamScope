@@ -1,0 +1,115 @@
+# Interim confirmatory results
+
+## Status and scope
+
+This is a descriptive checkpoint, not the final confirmatory result. The
+frozen target remains 50 valid runs. Collection stopped under the predeclared
+rule after sequence 14 produced three consecutive invalid attempts at the same
+pre-stimulus BLE setup boundary. No timeout, validity rule, retry allowance,
+planned order, or target count was changed in response.
+
+The current ledger contains 19 confirmatory attempt records across 14 attempted
+schedule positions:
+
+- 13 valid runs, all passes;
+- no valid failures;
+- six invalid pre-stimulus attempts, which are apparatus/setup observations and
+  not failed SUT evaluations; and
+- five invalids localized to the BLE boundary and one to the application
+  boundary.
+
+Thirteen schedule positions are complete. Sequence 14 remains incomplete and
+sequence 15 was not started. Calibration, dry-run, and later diagnostic records
+remain outside these counts.
+
+## Condition-level accounting
+
+| Condition | Valid target | Attempts | Valid passes | Valid failures | Invalid attempts |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Injected healthy | 10 | 3 | 3 | 0 | 0 |
+| Bumble healthy | 10 | 7 | 2 | 0 | 5 |
+| Bumble dropped notification | 10 | 4 | 3 | 0 | 1 |
+| Bumble malformed notification | 10 | 3 | 3 | 0 | 0 |
+| Tablet healthy reference | 5 | 1 | 1 | 0 | 0 |
+| Tablet malformed reference | 5 | 1 | 1 | 0 | 0 |
+
+The uneven denominators are a consequence of the frozen schedule and stop
+rule. They must not be treated as a balanced comparison or converted into
+route failure-rate estimates.
+
+## Descriptive timing
+
+The timing summaries below use valid healthy confirmatory runs only. Values are
+milliseconds from the normalized event record.
+
+| Route | Metric | n | Minimum | Median | Mean | Maximum |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Injected | Motion observation | 3 | 978.011 | 1,003.431 | 1,000.463 | 1,019.947 |
+| Injected | Completed-interval observation | 3 | 871.972 | 948.542 | 1,161.072 | 1,662.703 |
+| Bumble BLE | Setup subscription | 2 | 3,805.925 | 5,720.090 | 5,720.090 | 7,634.255 |
+| Bumble BLE | Motion observation | 2 | 790.571 | 841.711 | 841.711 | 892.850 |
+| Bumble BLE | Completed-interval observation | 2 | 805.964 | 834.860 | 834.860 | 863.755 |
+| Tablet BLE | Setup subscription | 1 | 3,926.368 | 3,926.368 | 3,926.368 | 3,926.368 |
+| Tablet BLE | Motion observation | 1 | 1,030.192 | 1,030.192 | 1,030.192 | 1,030.192 |
+| Tablet BLE | Completed-interval observation | 1 | 992.370 | 992.370 | 992.370 | 992.370 |
+
+Every valid healthy run observed both post-stimulus outcomes within the frozen
+2,000 ms bound. The two valid hybrid subscriptions also occurred within the
+8,000 ms setup bound, although the later value was close to that bound. These
+are small-sample descriptive observations, not latency-distribution estimates.
+
+## Diagnostic contrast after the stop
+
+Three out-of-band isolation runs were retained as diagnostics and never folded
+into the confirmatory ledger. The physical-tablet check
+`calibration-isolation-tablet-005` was a valid pass: subscription took
+2,444 ms, motion was observable after 991 ms, and the completed interval after
+1,571 ms. Two isolated emulator/Bumble checks were invalid before stimulus.
+One remained at `REQUESTING-PERMISSION` through the setup bound; the warm retry
+reached `CONNECTING` but not `SUBSCRIBED` within the bound.
+
+This contrast localizes the recurring readiness condition to the hybrid path
+under the observed configuration. It does not identify which component caused
+it, show that the tablet route is generally more reliable, or repair the
+incomplete confirmatory sequence.
+
+## Interpretation against the paper's claim
+
+The semantic-injection route exercised the application's state-transition
+logic smoothly, but by construction it could not expose permission handling,
+physical link establishment, GATT discovery, subscription readiness, or
+controller/bridge timing. Those observations appeared only when the test route
+crossed the physical BLE seam. In this worked example, virtualizing the test
+client therefore did not eliminate physical dependencies; it relocated them
+into the hybrid emulator/controller/fixture path.
+
+That is the strongest warranted interpretation of the current evidence. It
+supports a conditional assurance argument: a hardware-attached or hybrid route
+is required when the assurance claim includes physical properties that a
+substitute route neither exercises nor represents through prior validation.
+It does not support a universal preference for physical testing.
+
+The existing semantic-injection route is already the relevant substitute; a
+second artificial "stub suite" is unnecessary. Its clean runs show what can be
+learned above the boundary, while the BLE routes show the additional classes of
+readiness and observability introduced by crossing it. Likewise, the controlled
+dropped and malformed cases demonstrate route-specific fault observability;
+they are not evidence that a commercial product defect was discovered or that
+the additional apparatus is economically justified in every setting.
+
+Calling the work merely "mobile automation" would therefore underspecify the
+system under test. The mobile UI is the interaction and observation surface,
+but the assurance target can extend through the communication path to the
+physical producer of the observed state. Whether the troubleshooting cost is
+worth paying depends on that declared assurance target, not on a blanket rule
+about cloud, virtual, or self-hosted execution.
+
+## Reproduction and provenance
+
+Run `npm run results:summarize` from `automation` to regenerate the private
+CSV/JSON package beneath
+`artifacts/evidence/pilot-v1/derived/interim-results`. The generator validates
+record structure, reconciles retries against the frozen plan, enforces the
+stimulus validity boundary, and keeps diagnostic runs separate. Sanitization
+and release packaging remain a later step; the immutable raw evidence is not
+committed to Git.
