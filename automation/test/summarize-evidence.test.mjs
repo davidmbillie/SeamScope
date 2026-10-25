@@ -72,7 +72,7 @@ test('reconciles retries from records without counting an invalid attempt as a r
       repetition: 1,
       configurationId: 'test',
       retryOf: invalid.manifest.runId,
-      runId: 'c001-retry01-injected-healthy-r01',
+      runId: 'c001-injected-healthy-r01-retry01',
     });
     await appendEvent({
       runRoot: retry.runRoot,
@@ -113,7 +113,7 @@ test('reconciles retries from records without counting an invalid attempt as a r
       result.runs.map(run => [run.runId, run.attempt, run.stimulusIssued]),
       [
         ['c001-injected-healthy-r01', 1, false],
-        ['c001-retry01-injected-healthy-r01', 2, true],
+        ['c001-injected-healthy-r01-retry01', 2, true],
       ],
     );
     assert.equal(result.runs[1].motionObservationMs, 150);

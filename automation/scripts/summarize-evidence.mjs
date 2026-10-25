@@ -75,11 +75,17 @@ async function readEvents(filePath) {
 }
 
 function plannedRunIdFor(runId) {
-  return runId.replace(/^(c\d{3})-retry\d+-/, '$1-');
+  const prefixRetry = runId.match(/^(c\d{3})-retry\d+-(.+)$/);
+  if (prefixRetry) return `${prefixRetry[1]}-${prefixRetry[2]}`;
+  return runId.replace(/-retry\d+$/, '');
 }
 
 function retryNumber(runId) {
-  return Number(runId.match(/^c\d{3}-retry(\d+)-/)?.[1] ?? 0);
+  return Number(
+    runId.match(/^c\d{3}-retry(\d+)-/)?.[1] ??
+      runId.match(/-retry(\d+)$/)?.[1] ??
+      0,
+  );
 }
 
 function round(value) {
