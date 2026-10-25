@@ -551,6 +551,11 @@ export async function auditEvidence() {
         {runId},
       );
     }
+    const stoppedBeforeExecutor =
+      verdict.validity === 'invalid' &&
+      verdict.failureBoundary === 'executor' &&
+      !events.some(event => event.eventType === 'stimulus-issued') &&
+      !events.some(event => event.source === 'appium');
     for (const fileName of ['appium.log', 'logcat.log', 'serial.log']) {
       const logPath = path.join(runRoot, fileName);
       if (!(await exists(logPath))) {
@@ -563,6 +568,7 @@ export async function auditEvidence() {
           {runId},
         );
       } else if (
+        !stoppedBeforeExecutor &&
         (fileName !== 'serial.log' || manifest.route !== 'injected') &&
         (await stat(logPath)).size === 0
       ) {
@@ -661,7 +667,7 @@ export async function auditEvidence() {
         );
       }
     }
-    if (verdict.validity === 'invalid') {
+    if (verdict.validity === 'invalid' && !stoppedBeforeExecutor) {
       const missingFailureCapture = [];
       for (const fileName of ['failure.png', 'failure-ui.xml']) {
         if (!(await exists(path.join(runRoot, fileName)))) missingFailureCapture.push(fileName);

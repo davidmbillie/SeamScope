@@ -10,10 +10,11 @@ or interpretation, not the apparent inconvenience of the underlying event.
 | A-002 | Low | Accepted | Confirmatory sequence 6 | First invalid attempt lacks the usual failure screenshot and UI hierarchy. |
 | A-003 | Low | Compatibility documented | Evidence schema | Nine events use historical literal `malform` rather than canonical `malformed`. |
 | A-004 | Low | Accepted | Supporting calibration | One retrospectively appended intervention event has an earlier action timestamp than its preceding event. |
-| A-005 | Informational | Accepted | Confirmatory artifacts | Seven duplicate-content groups are explained by deterministic outputs. |
+| A-005 | Informational | Accepted | Confirmatory artifacts | Eight duplicate-content groups are explained by deterministic outputs and empty pre-executor placeholders. |
 | A-006 | Informational | Resolved | Freeze identity | Current automation lock differs post-freeze; exact frozen lock is retained in the declared Git baseline. |
 | A-007 | Moderate | Resolved | Confirmatory ordering | Sequence 20 was executed after sequence 19 activated the stop rule; the original pass is excluded and a post-requalification replacement is eligible. |
 | A-008 | Low | Accepted | Supporting calibration | Calibration 010 crossed stimulus with a path-resolution error that prevented its normal per-run capture. |
+| A-009 | Low | Resolved | Confirmatory sequence 21 | The first manifest used the wrong configuration identifier and was stopped before executor startup or stimulus. |
 
 ## A-001: exact frozen APK recovered
 
@@ -73,7 +74,8 @@ event stream contains a host-time reversal.
 ## A-005: explainable duplicate-content groups
 
 The checksum inventory found repeated deterministic serial transcripts for
-identical scripted cases, empty serial logs for the injected route, and one UI
+identical scripted cases, empty serial logs for the injected route, empty
+pre-executor placeholders for the first sequence-21 attempt, and one UI
 hierarchy shared by two attempts stopped in the same visible state. No
 manifest, event stream, verdict, Bumble slice, Appium log, or `logcat` record is
 duplicated across confirmatory identities.
@@ -129,3 +131,20 @@ stimulus markers and final boundary event were appended as explicit
 reconstructions rather than presented as original normalized capture. All
 subsequent paths were absolute; calibrations `011` and `012` were fully
 captured and supplied the two consecutive passes used for requalification.
+
+## A-009: sequence-21 manifest initialization error
+
+The first sequence-21 directory, `c021-injected-healthy-r05`, was initialized
+with configuration identifier `injected-frozen` instead of the declared
+`emulator-injected-frozen`. The discrepancy was detected before Appium started
+and before any stimulus was issued. The immutable directory therefore contains
+its manifest, two lifecycle events, an `invalid / not-evaluated` executor-
+boundary verdict, and empty log placeholders rather than application captures.
+
+Disposition: the original record remains visible. The correctly initialized
+`c021-retry01-injected-healthy-r05` names it through `retryOf`, executed the
+scheduled case, and passed. The integrity audit treats empty Appium/logcat
+placeholders and absent UI failure captures as expected only for an invalid
+executor-boundary record that contains neither an Appium event nor a stimulus.
+This narrow exception does not relax capture checks for application-, BLE-, or
+post-stimulus records.
