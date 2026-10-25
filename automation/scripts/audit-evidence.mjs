@@ -290,7 +290,7 @@ export async function auditEvidence() {
     ['firmwareApplicationBinary', path.join(repositoryRoot, 'artifacts', 'freeze', 'firmware', 'seamscope_peripheral.ino.bin'), null],
     ['firmwareBootloaderBinary', path.join(repositoryRoot, 'artifacts', 'freeze', 'firmware', 'seamscope_peripheral.ino.bootloader.bin'), null],
     ['firmwarePartitionsBinary', path.join(repositoryRoot, 'artifacts', 'freeze', 'firmware', 'seamscope_peripheral.ino.partitions.bin'), null],
-    ['applicationApk', path.join(repositoryRoot, 'apps', 'mobile', 'android', 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk'), null],
+    ['applicationApk', path.join(repositoryRoot, 'artifacts', 'freeze', 'application', 'seamscope-frozen.apk'), null],
   ];
   for (const [key, filePath, gitPath] of frozenArtifacts) {
     await verifyFrozenArtifact({

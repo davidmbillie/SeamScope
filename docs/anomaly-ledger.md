@@ -6,29 +6,27 @@ or interpretation, not the apparent inconvenience of the underlying event.
 
 | ID | Severity | Status | Scope | Summary |
 | --- | --- | --- | --- | --- |
-| A-001 | Moderate | Open | Freeze artifact | Exact frozen APK is not currently retained at the expected build location. |
+| A-001 | Moderate | Resolved | Freeze artifact | Exact frozen APK was recovered from the frozen emulator installation and retained separately from later builds. |
 | A-002 | Low | Accepted | Confirmatory sequence 6 | First invalid attempt lacks the usual failure screenshot and UI hierarchy. |
 | A-003 | Low | Compatibility documented | Evidence schema | Nine events use historical literal `malform` rather than canonical `malformed`. |
 | A-004 | Low | Accepted | Supporting calibration | One retrospectively appended intervention event has an earlier action timestamp than its preceding event. |
 | A-005 | Informational | Accepted | Confirmatory artifacts | Seven duplicate-content groups are explained by deterministic outputs. |
 | A-006 | Informational | Resolved | Freeze identity | Current automation lock differs post-freeze; exact frozen lock is retained in the declared Git baseline. |
 
-## A-001: exact frozen APK not presently retained
+## A-001: exact frozen APK recovered
 
 The freeze records identify the executed APK as 38,615,629 bytes with SHA-256
 `b4e95c55c29e19a54f084e92afac6df498fe440a9e903f1137ea9825d1c74ff8`.
-The APK currently found at the debug-build output is 123,962,433 bytes with
-SHA-256
-`c14e10a3533072e9d5f86db6e63bb3b8f79b9f7eef403115b733c5801c647f35`.
-It is a later build and is not an acceptable substitute.
+The APK at the ordinary debug-build output is a later build and was not used as
+a substitute. The exact executed package was recovered from the retained
+emulator installation and stored privately at
+`artifacts/freeze/application/seamscope-frozen.apk`. Its size and SHA-256 match
+the freeze record exactly. The integrity audit now verifies that retained copy
+directly.
 
-Impact: the executed binary remains cryptographically identified, and its
-source/dependency freeze and run evidence remain available, but a replication
-package cannot currently redistribute or directly byte-verify that exact APK.
-This does not change any run verdict. Before public packaging, search any
-retained target installation or backup for the exact hash; if recovery fails,
-disclose that the frozen binary is unavailable and provide the source identity
-and build instructions rather than claiming binary preservation.
+Impact: binary preservation and direct byte verification are restored. The APK
+remains ignored with the private artifact layer until the release package and
+redistribution boundary are decided. No run verdict changed.
 
 ## A-002: missing failure UI capture on `c006-bumble-healthy-r02`
 

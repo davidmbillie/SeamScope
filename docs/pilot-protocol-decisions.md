@@ -632,3 +632,20 @@ It does not establish a component root cause, estimate a route failure rate, or
 convert either diagnostic invalid into a confirmatory result. The frozen
 timeouts, validity boundary, retry rule, and target counts are unchanged.
 
+The stopped condition was requalified on 2026-10-24 in a separate calibration
+stratum. `calibration-requalification-bumble-001` and `002` connected at the
+link layer but did not reach `SUBSCRIBED` within 8,000 ms, so neither issued a
+stimulus. The following unchanged warm lifecycles,
+`calibration-requalification-bumble-003` and `004`, subscribed in 2,486 ms and
+2,247 ms and both passed end to end without in-run intervention. This broke the
+recurrence sequence and demonstrated repeatable readiness without changing a
+frozen threshold.
+
+Collection then resumed at the stopped schedule position under a new retry
+identity. `c014-retry03-bumble-healthy-r03` subscribed in 2,490 ms, displayed
+motion after approximately 851 ms, displayed one completed interval after
+approximately 813 ms, and disconnected cleanly. Its `valid / pass` verdict
+completes sequence 14. The ledger now contains 20 confirmatory attempts, 14
+valid passes, no valid failures, and six invalid pre-stimulus attempts; sequence
+15 is next.
+

@@ -2,7 +2,7 @@
 
 ## Outcome
 
-The 2026-10-24 audit completed with **zero integrity errors, three warnings,
+The updated 2026-10-24 audit completed with **zero integrity errors, two warnings,
 and one expected post-freeze observation**. The confirmatory result accounting
 in `docs/interim-results.md` remains supported by the retained evidence.
 
@@ -21,12 +21,12 @@ because the current `artifacts` tree is the untouched private evidence layer.
 
 | Check | Result |
 | --- | ---: |
-| Run directories examined | 94 |
-| Confirmatory attempt records | 19 |
-| Normalized events validated | 1,176 |
-| Run records valid against the version-1 schemas | 94 |
-| Confirmatory Bumble slices compared with source-session bytes | 14 |
-| Files entered in the current SHA-256 inventory | 186 |
+| Run directories examined | 99 |
+| Confirmatory attempt records | 20 |
+| Normalized events validated | 1,245 |
+| Run records valid against the version-1 schemas | 99 |
+| Confirmatory Bumble slices compared with source-session bytes | 15 |
+| Files entered in the current SHA-256 inventory | 196 |
 | Duplicate-content groups among confirmatory artifacts | 7 |
 
 All run manifests, event streams, and verdicts parsed successfully. The audit
@@ -48,6 +48,7 @@ SHA-256 identities:
 
 - firmware source;
 - frozen run plan;
+- frozen application APK;
 - mobile dependency lock;
 - firmware application binary;
 - firmware bootloader binary; and
@@ -59,17 +60,18 @@ confirmed that baseline commit `257702d1ad8c3a246540279145b4cd6a282b0aff`
 still contains the exact frozen lock bytes and hash. This is expected
 post-freeze worktree evolution, not loss of the frozen identity.
 
-The exact frozen APK is not present at the current retained build location. A
-later debug APK exists there but differs in both size and SHA-256 identity; it
-has not been substituted for the frozen binary. This remains an artifact-
-availability warning in the anomaly ledger.
+The exact frozen APK was recovered from the frozen emulator installation and
+retained privately at `artifacts/freeze/application/seamscope-frozen.apk`.
+Its 38,615,629-byte size and SHA-256 identity match the freeze record. A later
+debug build remains distinct and was not substituted.
 
 ## Confirmatory record relationships
 
-All 19 confirmatory attempts map to frozen schedule entries. Their route, case,
+All 20 confirmatory attempts map to frozen schedule entries. Their route, case,
 and repetition fields agree with the plan; retry manifests and verdicts agree;
-and every retry points to the immediately preceding attempt. No schedule entry
-after the incomplete sequence 14 was started.
+and every retry points to the immediately preceding attempt. Sequence 14 is now
+complete through valid retry `c014-retry03-bumble-healthy-r03`; sequence 15 is
+the next unstarted position.
 
 Every valid run crosses the declared `stimulus-issued` boundary, and every
 invalid run remains before it. Final normalized events agree with the stored
@@ -79,7 +81,7 @@ only confirmatory record missing its usual failure screenshot and UI hierarchy;
 its Appium, `logcat`, serial, Bumble, event, and verdict evidence remains
 available.
 
-All 14 Bumble-backed confirmatory attempts contain capture metadata and a
+All 15 Bumble-backed confirmatory attempts contain capture metadata and a
 retained Bumble slice. Each slice has the declared length and is byte-identical
 to the corresponding offset range in its named source session log.
 
@@ -112,8 +114,9 @@ duplicate groups therefore do not indicate copied or aliased run records.
 ## Interpretation
 
 The audit does not convert invalid setup attempts into application failures or
-complete the interrupted confirmatory matrix. It establishes that the interim
-counts, timings, route distinctions, and stop-rule account are traceable to
-internally consistent retained records. Remaining warnings concern artifact
-availability or capture completeness and are disclosed in
+claim that the still-in-progress 50-run matrix is complete. It establishes that
+the interim counts, timings, route distinctions, stop-rule account, documented
+requalification, and resumed sequence-14 result are traceable to internally
+consistent retained records. Remaining warnings concern one capture omission
+and one supporting-run timestamp reversal and are disclosed in
 `docs/anomaly-ledger.md`.

@@ -5,29 +5,31 @@
 This is a descriptive checkpoint, not the final confirmatory result. The
 frozen target remains 50 valid runs. Collection stopped under the predeclared
 rule after sequence 14 produced three consecutive invalid attempts at the same
-pre-stimulus BLE setup boundary. No timeout, validity rule, retry allowance,
+pre-stimulus BLE setup boundary. After a separate documented requalification
+session restored repeatable warm-lifecycle readiness, collection resumed at
+that same schedule position. No timeout, validity rule, retry allowance,
 planned order, or target count was changed in response.
 
-The current ledger contains 19 confirmatory attempt records across 14 attempted
+The current ledger contains 20 confirmatory attempt records across 14 attempted
 schedule positions:
 
-- 13 valid runs, all passes;
+- 14 valid runs, all passes;
 - no valid failures;
 - six invalid pre-stimulus attempts, which are apparatus/setup observations and
   not failed SUT evaluations; and
 - five invalids localized to the BLE boundary and one to the application
   boundary.
 
-Thirteen schedule positions are complete. Sequence 14 remains incomplete and
-sequence 15 was not started. Calibration, dry-run, and later diagnostic records
-remain outside these counts.
+All 14 attempted schedule positions are complete. Sequence 15 is the next
+unstarted position. Calibration, dry-run, and later diagnostic records remain
+outside these counts.
 
 ## Condition-level accounting
 
 | Condition | Valid target | Attempts | Valid passes | Valid failures | Invalid attempts |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Injected healthy | 10 | 3 | 3 | 0 | 0 |
-| Bumble healthy | 10 | 7 | 2 | 0 | 5 |
+| Bumble healthy | 10 | 8 | 3 | 0 | 5 |
 | Bumble dropped notification | 10 | 4 | 3 | 0 | 1 |
 | Bumble malformed notification | 10 | 3 | 3 | 0 | 0 |
 | Tablet healthy reference | 5 | 1 | 1 | 0 | 0 |
@@ -46,16 +48,16 @@ milliseconds from the normalized event record.
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | Injected | Motion observation | 3 | 978.011 | 1,003.431 | 1,000.463 | 1,019.947 |
 | Injected | Completed-interval observation | 3 | 871.972 | 948.542 | 1,161.072 | 1,662.703 |
-| Bumble BLE | Setup subscription | 2 | 3,805.925 | 5,720.090 | 5,720.090 | 7,634.255 |
-| Bumble BLE | Motion observation | 2 | 790.571 | 841.711 | 841.711 | 892.850 |
-| Bumble BLE | Completed-interval observation | 2 | 805.964 | 834.860 | 834.860 | 863.755 |
+| Bumble BLE | Setup subscription | 3 | 2,490.368 | 3,805.925 | 4,643.516 | 7,634.255 |
+| Bumble BLE | Motion observation | 3 | 790.571 | 850.679 | 844.700 | 892.850 |
+| Bumble BLE | Completed-interval observation | 3 | 805.964 | 813.311 | 827.677 | 863.755 |
 | Tablet BLE | Setup subscription | 1 | 3,926.368 | 3,926.368 | 3,926.368 | 3,926.368 |
 | Tablet BLE | Motion observation | 1 | 1,030.192 | 1,030.192 | 1,030.192 | 1,030.192 |
 | Tablet BLE | Completed-interval observation | 1 | 992.370 | 992.370 | 992.370 | 992.370 |
 
 Every valid healthy run observed both post-stimulus outcomes within the frozen
-2,000 ms bound. The two valid hybrid subscriptions also occurred within the
-8,000 ms setup bound, although the later value was close to that bound. These
+2,000 ms bound. The three valid hybrid subscriptions also occurred within the
+8,000 ms setup bound, although the largest value was close to that bound. These
 are small-sample descriptive observations, not latency-distribution estimates.
 
 ## Diagnostic contrast after the stop
@@ -68,10 +70,19 @@ into the confirmatory ledger. The physical-tablet check
 One remained at `REQUESTING-PERMISSION` through the setup bound; the warm retry
 reached `CONNECTING` but not `SUBSCRIBED` within the bound.
 
-This contrast localizes the recurring readiness condition to the hybrid path
-under the observed configuration. It does not identify which component caused
-it, show that the tablet route is generally more reliable, or repair the
-incomplete confirmatory sequence.
+This contrast localized the recurring readiness condition to the hybrid path
+under the observed configuration. It did not identify which component caused
+it or show that the tablet route is generally more reliable.
+
+A later bounded requalification session retained four additional calibration
+records outside the confirmatory ledger. Two attempts connected but did not
+finish GATT discovery and subscription within 8,000 ms; no stimulus was issued.
+The next two unchanged warm lifecycles subscribed in 2,486 ms and 2,247 ms and
+passed end to end without in-run intervention. The route was therefore
+requalified under the existing invalid-attempt policy. Confirmatory retry
+`c014-retry03-bumble-healthy-r03` then subscribed in 2,490 ms, displayed motion
+after 851 ms, displayed the completed interval after 813 ms, disconnected
+cleanly, and completed sequence 14 as a valid pass.
 
 ## Interpretation against the paper's claim
 
