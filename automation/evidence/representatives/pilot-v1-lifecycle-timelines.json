@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "1",
+  "studyId": "pilot-v1",
+  "protocolVersion": "pilot-v1-frozen",
+  "figurePurpose": "Contrast a complete and a setup-invalid lifecycle while holding the Bumble-backed route and healthy case constant.",
+  "timeOrigin": "Fixture response OK RESET within each run",
+  "displayPrecision": "seconds rounded to three decimal places",
+  "selectionPolicy": [
+    "Use confirmatory records rather than calibration or post-stop diagnostics.",
+    "Hold route and behavioral case constant.",
+    "Require complete supporting route evidence.",
+    "Use the earliest ordinary successful hybrid run.",
+    "Use the invalid attempt that activated the predeclared stop rule.",
+    "Treat the pair as a mechanism illustration, not a frequency estimate."
+  ],
+  "panels": [
+    {
+      "panel": "A",
+      "role": "successful-hybrid-lifecycle",
+      "runId": "c002-bumble-healthy-r01",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "validity": "valid",
+      "outcome": "pass",
+      "failureBoundary": "none",
+      "stimulusBoundaryCrossed": true,
+      "manualIntervention": false,
+      "events": [
+        {
+          "order": 1,
+          "secondsAfterReset": 0,
+          "source": "Fixture",
+          "eventType": "command-accepted",
+          "label": "Fixture reset accepted",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 2,
+          "secondsAfterReset": 2.531,
+          "source": "Fixture",
+          "eventType": "ble-connected",
+          "label": "Physical BLE link connected",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 3,
+          "secondsAfterReset": 4.043,
+          "source": "Runner",
+          "eventType": "setup-ready",
+          "label": "GATT subscription ready",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 5,
+          "secondsAfterReset": 4.741,
+          "source": "Runner",
+          "eventType": "stimulus-issued",
+          "label": "Motion stimulus issued (8.0)",
+          "crossesStimulusBoundary": true
+        },
+        {
+          "order": 9,
+          "secondsAfterReset": 5.532,
+          "source": "Application",
+          "eventType": "app-state",
+          "label": "In Motion state observable",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 11,
+          "secondsAfterReset": 5.548,
+          "source": "Runner",
+          "eventType": "stimulus-issued",
+          "label": "Stop stimulus issued (0.0)",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 15,
+          "secondsAfterReset": 6.354,
+          "source": "Application",
+          "eventType": "app-state",
+          "label": "Completed interval observable",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 17,
+          "secondsAfterReset": 8.44,
+          "source": "Fixture",
+          "eventType": "ble-disconnected",
+          "label": "BLE disconnected",
+          "crossesStimulusBoundary": false
+        }
+      ]
+    },
+    {
+      "panel": "B",
+      "role": "setup-invalid-hybrid-lifecycle",
+      "runId": "c014-retry02-bumble-healthy-r03",
+      "route": "bumble-ble",
+      "caseId": "healthy-threshold",
+      "validity": "invalid",
+      "outcome": "not-evaluated",
+      "failureBoundary": "ble",
+      "stimulusBoundaryCrossed": false,
+      "manualIntervention": false,
+      "events": [
+        {
+          "order": 1,
+          "secondsAfterReset": 0,
+          "source": "Fixture",
+          "eventType": "command-accepted",
+          "label": "Fixture reset accepted",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 2,
+          "secondsAfterReset": 7.614,
+          "source": "Fixture",
+          "eventType": "ble-connected",
+          "label": "Physical BLE link connected",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 3,
+          "secondsAfterReset": 8.46,
+          "source": "Appium",
+          "eventType": "assertion",
+          "label": "Readiness failed: still CONNECTING",
+          "crossesStimulusBoundary": false
+        },
+        {
+          "order": 4,
+          "secondsAfterReset": 11.988,
+          "source": "Fixture",
+          "eventType": "ble-disconnected",
+          "label": "BLE disconnected during teardown",
+          "crossesStimulusBoundary": false
+        }
+      ]
+    }
+  ]
+}

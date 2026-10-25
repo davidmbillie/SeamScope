@@ -104,6 +104,18 @@ physical producer of the observed state. Whether the troubleshooting cost is
 worth paying depends on that declared assurance target, not on a blanket rule
 about cloud, virtual, or self-hosted execution.
 
+## Representative mechanism figure
+
+The paired vector figure in
+[`figures/representative-lifecycles.svg`](figures/representative-lifecycles.svg)
+holds the Bumble-backed route and healthy case constant. It contrasts the
+earliest ordinary successful hybrid lifecycle with the setup-invalid attempt
+that activated the frozen stop rule. Its selection policy, caption,
+accessibility text, and reproduction command are documented in
+[`representative-timelines.md`](representative-timelines.md). The figure is an
+explanatory descent into two named records, not an additional statistical
+comparison.
+
 ## Reproduction and provenance
 
 Run `npm run results:summarize` from `automation` to regenerate the private

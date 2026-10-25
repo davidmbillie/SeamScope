@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+  <title id="title">Two Bumble-backed SeamScope lifecycles</title>
+  <desc id="description">A successful hybrid lifecycle crosses the stimulus boundary and produces observable motion and a completed interval. A setup-invalid lifecycle connects by Bluetooth but remains connecting through the readiness bound and never receives a stimulus.</desc>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #17212b; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle-main { font-size: 15px; fill: #4b5660; }
+    .panel-title { font-size: 19px; font-weight: 700; }
+    .subtitle { font-size: 13px; fill: #4b5660; }
+    .time { font-size: 12px; font-variant-numeric: tabular-nums; fill: #4b5660; }
+    .event { font-size: 14px; font-weight: 600; }
+    .source { font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .boundary { font-size: 11px; font-weight: 700; fill: #514174; }
+    .outcome { font-size: 13px; font-weight: 700; }
+    .note { font-size: 12px; fill: #4b5660; }
+  </style>
+  <rect width="1400" height="760" fill="#f5f7f8"/>
+  <text x="40" y="45" class="title">Same hybrid route, different lifecycle reach</text>
+  <text x="40" y="72" class="subtitle-main">Times are seconds after the fixture reset; panels illustrate mechanism, not route failure frequency.</text>
+  <rect x="40" y="105" width="630" height="585" rx="12" fill="#ffffff" stroke="#b7c0c8"/>
+<text x="66" y="143" class="panel-title">A. Complete lifecycle</text>
+<text x="66" y="168" class="subtitle">c002-bumble-healthy-r01</text>
+<line x1="126" y1="190" x2="126" y2="624" stroke="#67727c" stroke-width="2"/>
+<circle cx="126" cy="190" r="7" fill="#215a75"/>
+<text x="108" y="195" text-anchor="end" class="time">0.000 s</text>
+<text x="146" y="187" class="event">Fixture reset accepted</text>
+<text x="146" y="207" class="source" fill="#215a75">Fixture</text>
+<circle cx="126" cy="252" r="7" fill="#215a75"/>
+<text x="108" y="257" text-anchor="end" class="time">2.531 s</text>
+<text x="146" y="249" class="event">Physical BLE link connected</text>
+<text x="146" y="269" class="source" fill="#215a75">Fixture</text>
+<circle cx="126" cy="314" r="7" fill="#665191"/>
+<text x="108" y="319" text-anchor="end" class="time">4.043 s</text>
+<text x="146" y="311" class="event">GATT subscription ready</text>
+<text x="146" y="331" class="source" fill="#665191">Runner</text>
+<circle cx="126" cy="376" r="7" fill="#665191"/>
+<text x="108" y="381" text-anchor="end" class="time">4.741 s</text>
+<text x="146" y="373" class="event">Motion stimulus issued (8.0)</text>
+<text x="146" y="393" class="source" fill="#665191">Runner</text>
+<line x1="58" y1="347" x2="652" y2="347" stroke="#665191" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="642" y="340" text-anchor="end" class="boundary">stimulus boundary crossed</text>
+<circle cx="126" cy="438" r="7" fill="#18734b"/>
+<text x="108" y="443" text-anchor="end" class="time">5.532 s</text>
+<text x="146" y="435" class="event">In Motion state observable</text>
+<text x="146" y="455" class="source" fill="#18734b">Application</text>
+<circle cx="126" cy="500" r="7" fill="#665191"/>
+<text x="108" y="505" text-anchor="end" class="time">5.548 s</text>
+<text x="146" y="497" class="event">Stop stimulus issued (0.0)</text>
+<text x="146" y="517" class="source" fill="#665191">Runner</text>
+<circle cx="126" cy="562" r="7" fill="#18734b"/>
+<text x="108" y="567" text-anchor="end" class="time">6.354 s</text>
+<text x="146" y="559" class="event">Completed interval observable</text>
+<text x="146" y="579" class="source" fill="#18734b">Application</text>
+<circle cx="126" cy="624" r="7" fill="#215a75"/>
+<text x="108" y="629" text-anchor="end" class="time">8.440 s</text>
+<text x="146" y="621" class="event">BLE disconnected</text>
+<text x="146" y="641" class="source" fill="#215a75">Fixture</text>
+<rect x="65" y="642" width="580" height="31" rx="6" fill="#18734b" opacity="0.10"/>
+<text x="355" y="663" text-anchor="middle" class="outcome" fill="#18734b">Valid pass: application behavior evaluated</text>
+  <rect x="730" y="105" width="630" height="585" rx="12" fill="#ffffff" stroke="#b7c0c8"/>
+<text x="756" y="143" class="panel-title">B. Setup-invalid lifecycle</text>
+<text x="756" y="168" class="subtitle">c014-retry02-bumble-healthy-r03</text>
+<line x1="816" y1="190" x2="816" y2="436" stroke="#67727c" stroke-width="2"/>
+<circle cx="816" cy="190" r="7" fill="#215a75"/>
+<text x="798" y="195" text-anchor="end" class="time">0.000 s</text>
+<text x="836" y="187" class="event">Fixture reset accepted</text>
+<text x="836" y="207" class="source" fill="#215a75">Fixture</text>
+<circle cx="816" cy="272" r="7" fill="#215a75"/>
+<text x="798" y="277" text-anchor="end" class="time">7.614 s</text>
+<text x="836" y="269" class="event">Physical BLE link connected</text>
+<text x="836" y="289" class="source" fill="#215a75">Fixture</text>
+<circle cx="816" cy="354" r="7" fill="#9a4d00"/>
+<text x="798" y="359" text-anchor="end" class="time">8.460 s</text>
+<text x="836" y="351" class="event">Readiness failed: still CONNECTING</text>
+<text x="836" y="371" class="source" fill="#9a4d00">Appium</text>
+<circle cx="816" cy="436" r="7" fill="#215a75"/>
+<text x="798" y="441" text-anchor="end" class="time">11.988 s</text>
+<text x="836" y="433" class="event">BLE disconnected during teardown</text>
+<text x="836" y="453" class="source" fill="#215a75">Fixture</text>
+<line x1="748" y1="398" x2="1342" y2="398" stroke="#9a4d00" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1332" y="390" text-anchor="end" class="boundary" fill="#7d3e00">stimulus boundary not crossed</text>
+<rect x="755" y="642" width="580" height="31" rx="6" fill="#9a4d00" opacity="0.10"/>
+<text x="1045" y="663" text-anchor="middle" class="outcome" fill="#9a4d00">Invalid / not evaluated: setup evidence retained</text>
+  <text x="40" y="728" class="note">The physical link can exist before GATT subscription is ready. Only a run crossing the declared stimulus boundary receives a behavioral verdict.</text>
+</svg>

@@ -1,0 +1,13 @@
+panel,runId,role,validity,outcome,failureBoundary,stimulusBoundaryCrossed,secondsAfterReset,source,eventType,label
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,0,Fixture,command-accepted,Fixture reset accepted
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,2.531,Fixture,ble-connected,Physical BLE link connected
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,4.043,Runner,setup-ready,GATT subscription ready
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,4.741,Runner,stimulus-issued,Motion stimulus issued (8.0)
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,5.532,Application,app-state,In Motion state observable
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,5.548,Runner,stimulus-issued,Stop stimulus issued (0.0)
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,6.354,Application,app-state,Completed interval observable
+A,c002-bumble-healthy-r01,successful-hybrid-lifecycle,valid,pass,none,true,8.44,Fixture,ble-disconnected,BLE disconnected
+B,c014-retry02-bumble-healthy-r03,setup-invalid-hybrid-lifecycle,invalid,not-evaluated,ble,false,0,Fixture,command-accepted,Fixture reset accepted
+B,c014-retry02-bumble-healthy-r03,setup-invalid-hybrid-lifecycle,invalid,not-evaluated,ble,false,7.614,Fixture,ble-connected,Physical BLE link connected
+B,c014-retry02-bumble-healthy-r03,setup-invalid-hybrid-lifecycle,invalid,not-evaluated,ble,false,8.46,Appium,assertion,Readiness failed: still CONNECTING
+B,c014-retry02-bumble-healthy-r03,setup-invalid-hybrid-lifecycle,invalid,not-evaluated,ble,false,11.988,Fixture,ble-disconnected,BLE disconnected during teardown
