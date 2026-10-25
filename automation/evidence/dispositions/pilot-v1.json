@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1",
+  "studyId": "pilot-v1",
+  "excludedConfirmatoryRuns": [
+    {
+      "runId": "c020-tablet-malformed-r02",
+      "reason": "Executed after the sequence-19 stop rule and before the required diagnosis and route requalification were complete.",
+      "retention": "supporting-evidence",
+      "replacementRunId": "c020-retry01-tablet-malformed-r02"
+    }
+  ]
+}

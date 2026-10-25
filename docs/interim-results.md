@@ -10,30 +10,34 @@ session restored repeatable warm-lifecycle readiness, collection resumed at
 that same schedule position. No timeout, validity rule, retry allowance,
 planned order, or target count was changed in response.
 
-The current ledger contains 20 confirmatory attempt records across 14 attempted
-schedule positions:
+The current analysis contains 32 eligible confirmatory attempts across 20
+completed schedule positions. Thirty-three confirmatory artifacts remain in
+the immutable ledger; one passing tablet artifact is retained as supporting
+evidence but excluded by the declared sequence-20 disposition:
 
-- 14 valid runs, all passes;
+- 20 valid runs, all passes;
 - no valid failures;
-- six invalid pre-stimulus attempts, which are apparatus/setup observations and
+- 12 invalid pre-stimulus attempts, which are apparatus/setup observations and
   not failed SUT evaluations; and
-- five invalids localized to the BLE boundary and one to the application
+- 11 invalids localized to the BLE boundary and one to the application
   boundary.
 
-All 14 attempted schedule positions are complete. Sequence 15 is the next
-unstarted position. Calibration, dry-run, and later diagnostic records remain
-outside these counts.
+Sequence 20 was repeated only after sequence 19 completed following diagnosis
+and route requalification. The original sequence-20 pass remains immutable but
+is excluded from confirmatory counts under anomaly `A-007`; its replacement is
+the eligible result. Sequence 21 is next. Calibration, dry-run, and diagnostic
+records remain outside these counts.
 
 ## Condition-level accounting
 
 | Condition | Valid target | Attempts | Valid passes | Valid failures | Invalid attempts |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Injected healthy | 10 | 3 | 3 | 0 | 0 |
-| Bumble healthy | 10 | 8 | 3 | 0 | 5 |
-| Bumble dropped notification | 10 | 4 | 3 | 0 | 1 |
-| Bumble malformed notification | 10 | 3 | 3 | 0 | 0 |
-| Tablet healthy reference | 5 | 1 | 1 | 0 | 0 |
-| Tablet malformed reference | 5 | 1 | 1 | 0 | 0 |
+| Injected healthy | 10 | 4 | 4 | 0 | 0 |
+| Bumble healthy | 10 | 11 | 4 | 0 | 7 |
+| Bumble dropped notification | 10 | 8 | 4 | 0 | 4 |
+| Bumble malformed notification | 10 | 5 | 4 | 0 | 1 |
+| Tablet healthy reference | 5 | 2 | 2 | 0 | 0 |
+| Tablet malformed reference | 5 | 2 | 2 | 0 | 0 |
 
 The uneven denominators are a consequence of the frozen schedule and stop
 rule. They must not be treated as a balanced comparison or converted into
@@ -46,19 +50,20 @@ milliseconds from the normalized event record.
 
 | Route | Metric | n | Minimum | Median | Mean | Maximum |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Injected | Motion observation | 3 | 978.011 | 1,003.431 | 1,000.463 | 1,019.947 |
-| Injected | Completed-interval observation | 3 | 871.972 | 948.542 | 1,161.072 | 1,662.703 |
-| Bumble BLE | Setup subscription | 3 | 2,490.368 | 3,805.925 | 4,643.516 | 7,634.255 |
-| Bumble BLE | Motion observation | 3 | 790.571 | 850.679 | 844.700 | 892.850 |
-| Bumble BLE | Completed-interval observation | 3 | 805.964 | 813.311 | 827.677 | 863.755 |
-| Tablet BLE | Setup subscription | 1 | 3,926.368 | 3,926.368 | 3,926.368 | 3,926.368 |
-| Tablet BLE | Motion observation | 1 | 1,030.192 | 1,030.192 | 1,030.192 | 1,030.192 |
-| Tablet BLE | Completed-interval observation | 1 | 992.370 | 992.370 | 992.370 | 992.370 |
+| Injected | Motion observation | 4 | 978.011 | 995.267 | 997.123 | 1,019.947 |
+| Injected | Completed-interval observation | 4 | 834.027 | 910.257 | 1,079.311 | 1,662.703 |
+| Bumble BLE | Setup subscription | 4 | 2,262.937 | 3,148.146 | 4,048.371 | 7,634.255 |
+| Bumble BLE | Motion observation | 4 | 790.571 | 871.764 | 882.276 | 995.005 |
+| Bumble BLE | Completed-interval observation | 4 | 805.964 | 838.533 | 865.410 | 978.609 |
+| Tablet BLE | Setup subscription | 2 | 3,926.368 | 5,183.977 | 5,183.977 | 6,441.586 |
+| Tablet BLE | Motion observation | 2 | 1,030.192 | 1,031.996 | 1,031.996 | 1,033.800 |
+| Tablet BLE | Completed-interval observation | 2 | 972.472 | 982.421 | 982.421 | 992.370 |
 
-Every valid healthy run observed both post-stimulus outcomes within the frozen
-2,000 ms bound. The three valid hybrid subscriptions also occurred within the
-8,000 ms setup bound, although the largest value was close to that bound. These
-are small-sample descriptive observations, not latency-distribution estimates.
+Every valid healthy confirmatory run observed both post-stimulus outcomes
+within the frozen 2,000 ms bound. The four valid hybrid subscriptions also
+occurred within the 8,000 ms setup bound, although the largest value was close
+to that bound. These are small-sample descriptive observations, not
+latency-distribution estimates.
 
 ## Diagnostic contrast after the stop
 
@@ -83,6 +88,40 @@ requalified under the existing invalid-attempt policy. Confirmatory retry
 `c014-retry03-bumble-healthy-r03` then subscribed in 2,490 ms, displayed motion
 after 851 ms, displayed the completed interval after 813 ms, disconnected
 cleanly, and completed sequence 14 as a valid pass.
+
+A second stop at sequence 19 triggered another separate requalification
+series. After a clean emulator/Bumble restart, five calibration lifecycles
+produced an application-invalid cold start, a pre-stimulus BLE invalid, a valid
+post-stimulus failure, a valid pass, and another valid post-stimulus failure.
+In both valid failures the fixture accepted and transmitted speed 8.0 and
+reported notification success, but the app did not display motion within
+2,000 ms. This series did not supply two consecutive unchanged passes, so it
+does not support resumed confirmatory collection. These diagnostic outcomes
+remain outside the confirmatory counts above.
+
+A later targeted session retained one capture-compromised but valid diagnostic
+failure followed by two fully captured, consecutive passes under unchanged
+conditions. The first pass subscribed in 2,376 ms and observed motion and
+completion in approximately 757 ms and 860 ms. The second subscribed in
+2,178 ms and observed the same transitions in approximately 778 ms and 805 ms.
+Those two passes requalified the route. Confirmatory retry
+`c019-retry03-bumble-dropped-r04` then passed: the deliberately dropped first
+notification produced no transition during 2,000 ms, sequence 2 recovered in
+approximately 927 ms, and sequence 3 completed the interval in approximately
+768 ms.
+
+The earlier System UI ANR is consistent with the practical risk of running a
+resource-heavy emulator on a memory-constrained host, but the retained data do
+not establish that cause. Host CPU was moderate during the later clean pass
+while available memory remained below 1 GB. Resource pressure is therefore an
+operational hypothesis, not a diagnosed mechanism.
+
+After a deliberate interval and fresh readiness check, replacement
+`c020-retry01-tablet-malformed-r02` subscribed in 1,714 ms, rejected the
+malformed first observation without entering motion, recovered on sequence 2,
+completed one interval on sequence 3, and disconnected cleanly. The original
+passing sequence-20 artifact is reported separately as supporting evidence and
+does not affect the counts above.
 
 ## Interpretation against the paper's claim
 

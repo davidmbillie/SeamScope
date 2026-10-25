@@ -2,7 +2,7 @@
 
 ## Outcome
 
-The updated 2026-10-24 audit completed with **zero integrity errors, two warnings,
+The updated 2026-10-25 audit completed with **zero integrity errors, two warnings,
 and one expected post-freeze observation**. The confirmatory result accounting
 in `docs/interim-results.md` remains supported by the retained evidence.
 
@@ -21,13 +21,14 @@ because the current `artifacts` tree is the untouched private evidence layer.
 
 | Check | Result |
 | --- | ---: |
-| Run directories examined | 99 |
-| Confirmatory attempt records | 20 |
-| Normalized events validated | 1,245 |
-| Run records valid against the version-1 schemas | 99 |
-| Confirmatory Bumble slices compared with source-session bytes | 15 |
-| Files entered in the current SHA-256 inventory | 196 |
-| Duplicate-content groups among confirmatory artifacts | 7 |
+| Run directories examined | 120 |
+| Retained confirmatory attempt records | 33 |
+| Confirmatory records excluded by declared disposition | 1 |
+| Normalized events validated | 1,522 |
+| Run records valid against the version-1 schemas | 120 |
+| Confirmatory Bumble slices compared with source-session bytes | 24 |
+| Files entered in the current SHA-256 inventory | 318 |
+| Duplicate-content groups among confirmatory artifacts | 8 |
 
 All run manifests, event streams, and verdicts parsed successfully. The audit
 checked schema conformance, run and event identities, contiguous event indices,
@@ -35,7 +36,8 @@ host-time ordering, validity-boundary crossing, manual-intervention flags,
 final-event/verdict agreement, frozen-plan correspondence, retry chains,
 route-specific log presence and non-emptiness, normalized fixture lines against
 the retained serial trace, PNG signatures, Android UI-hierarchy structure,
-checkpoint captures, and assertion/verdict consistency.
+checkpoint captures, assertion/verdict consistency, and the presence and
+schedule identity of every excluded run and its declared replacement.
 
 ## Freeze identity
 
@@ -67,11 +69,13 @@ debug build remains distinct and was not substituted.
 
 ## Confirmatory record relationships
 
-All 20 confirmatory attempts map to frozen schedule entries. Their route, case,
+All 33 retained confirmatory attempts map to frozen schedule entries. Their route, case,
 and repetition fields agree with the plan; retry manifests and verdicts agree;
-and every retry points to the immediately preceding attempt. Sequence 14 is now
-complete through valid retry `c014-retry03-bumble-healthy-r03`; sequence 15 is
-the next unstarted position.
+and every retry points to the immediately preceding attempt. The disposition
+registry excludes the original passing sequence-20 record while retaining it
+as supporting evidence and identifies the eligible post-requalification
+replacement at the same frozen schedule position. Sequences 1 through 20 are
+complete; sequence 21 is next.
 
 Every valid run crosses the declared `stimulus-issued` boundary, and every
 invalid run remains before it. Final normalized events agree with the stored
@@ -81,7 +85,7 @@ only confirmatory record missing its usual failure screenshot and UI hierarchy;
 its Appium, `logcat`, serial, Bumble, event, and verdict evidence remains
 available.
 
-All 15 Bumble-backed confirmatory attempts contain capture metadata and a
+All 24 Bumble-backed confirmatory attempts contain capture metadata and a
 retained Bumble slice. Each slice has the declared length and is byte-identical
 to the corresponding offset range in its named source session log.
 
@@ -104,19 +108,20 @@ frozen pilot.
 
 ## Duplicate-content review
 
-Seven duplicate hash groups were found. Six are deterministic serial transcripts
-or empty injected-route serial logs produced by repeated cases. The seventh is
-the same captured UI hierarchy in two runs that stopped on the same visible
-setup state. No manifests, event streams, verdicts, Bumble slices, Appium logs,
-or `logcat` records are duplicated across confirmatory run identities. The
-duplicate groups therefore do not indicate copied or aliased run records.
+Eight duplicate hash groups were found. They are deterministic serial
+transcripts, empty injected-route serial logs, or repeated captures of the same
+visible setup state. No manifests, event streams, verdicts, Bumble slices,
+Appium logs, or `logcat` records are duplicated across confirmatory run
+identities. The duplicate groups therefore do not indicate copied or aliased
+run records.
 
 ## Interpretation
 
 The audit does not convert invalid setup attempts into application failures or
 claim that the still-in-progress 50-run matrix is complete. It establishes that
 the interim counts, timings, route distinctions, stop-rule account, documented
-requalification, and resumed sequence-14 result are traceable to internally
-consistent retained records. Remaining warnings concern one capture omission
-and one supporting-run timestamp reversal and are disclosed in
-`docs/anomaly-ledger.md`.
+requalification, valid completion through sequence 20, and the explicit
+sequence-20 exclusion/replacement disposition are traceable to internally
+consistent retained records. Remaining warnings concern one confirmatory
+failure-capture omission and one supporting-run timestamp reversal; both are
+disclosed in `docs/anomaly-ledger.md`.

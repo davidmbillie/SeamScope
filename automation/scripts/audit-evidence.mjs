@@ -20,6 +20,12 @@ const planPath = path.join(
   'pilot-v1-confirmatory.json',
 );
 const freezePath = path.join(automationRoot, 'evidence', 'freezes', 'pilot-v1.json');
+const dispositionsPath = path.join(
+  automationRoot,
+  'evidence',
+  'dispositions',
+  'pilot-v1.json',
+);
 const schemaRoot = path.join(automationRoot, 'evidence', 'schemas');
 const execFileAsync = promisify(execFile);
 
@@ -238,11 +244,12 @@ export async function auditEvidence() {
   const findings = [];
   const inventory = [];
   const validators = await createValidators();
-  const [study, plan, freeze, privateFreeze, runEntries] = await Promise.all([
+  const [study, plan, freeze, privateFreeze, dispositions, runEntries] = await Promise.all([
     readJson(path.join(studyRoot, 'study-manifest.json')),
     readJson(planPath),
     readJson(freezePath),
     readJson(path.join(studyRoot, 'freeze-metadata.json')),
+    readJson(dispositionsPath),
     readdir(runsRoot, {withFileTypes: true}),
   ]);
 
@@ -319,6 +326,51 @@ export async function auditEvidence() {
     .map(entry => entry.name)
     .sort();
   const confirmatorySet = new Set(confirmatoryNames);
+  const excludedConfirmatoryRuns = dispositions.excludedConfirmatoryRuns ?? [];
+  if (dispositions.studyId !== study.studyId) {
+    addFinding(
+      findings,
+      'DISPOSITION_STUDY_DISAGREEMENT',
+      'error',
+      'study',
+      'The disposition registry identifies a different study.',
+      {studyId: study.studyId, dispositionStudyId: dispositions.studyId},
+    );
+  }
+  for (const disposition of excludedConfirmatoryRuns) {
+    if (!confirmatorySet.has(disposition.runId)) {
+      addFinding(
+        findings,
+        'DISPOSITION_RUN_MISSING',
+        'error',
+        'confirmatory-run',
+        'An excluded run named by the disposition registry is not retained.',
+        {runId: disposition.runId},
+      );
+    }
+    if (!confirmatorySet.has(disposition.replacementRunId)) {
+      addFinding(
+        findings,
+        'DISPOSITION_REPLACEMENT_MISSING',
+        'error',
+        'confirmatory-run',
+        'A replacement named by the disposition registry is not retained.',
+        {runId: disposition.runId, replacementRunId: disposition.replacementRunId},
+      );
+    } else if (
+      plannedRunIdFor(disposition.runId) !==
+      plannedRunIdFor(disposition.replacementRunId)
+    ) {
+      addFinding(
+        findings,
+        'DISPOSITION_REPLACEMENT_SEQUENCE_DISAGREEMENT',
+        'error',
+        'confirmatory-run',
+        'An excluded run and its replacement resolve to different schedule positions.',
+        {runId: disposition.runId, replacementRunId: disposition.replacementRunId},
+      );
+    }
+  }
   let structuredRunsValid = 0;
   let structuredEventsChecked = 0;
   let bumbleCapturesVerified = 0;
@@ -701,6 +753,7 @@ export async function auditEvidence() {
     scope: {
       totalRunDirectories: allRunNames.length,
       confirmatoryAttempts: confirmatoryNames.length,
+      excludedConfirmatoryRuns: excludedConfirmatoryRuns.length,
       structuredRunsSchemaValid: structuredRunsValid,
       structuredEventsChecked,
       bumbleCapturesByteVerified: bumbleCapturesVerified,

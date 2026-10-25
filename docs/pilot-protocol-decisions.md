@@ -649,3 +649,41 @@ completes sequence 14. The ledger now contains 20 confirmatory attempts, 14
 valid passes, no valid failures, and six invalid pre-stimulus attempts; sequence
 15 is next.
 
+## Second stop-rule checkpoint
+
+Collection later reached sequence 19 after valid completion of sequences 15
+through 18. Sequence 19 (`c019-bumble-dropped-r04`) and two retries all ended
+before stimulus. The first two attempts connected physically but did not reach
+`SUBSCRIBED` within 8,000 ms. After the automated Android Bluetooth-cycle rung,
+the third attempt found the Android adapter `OFF`. The three-attempt ceiling
+therefore stopped the scheduled sequence without producing a SUT verdict.
+
+A clean emulator/Bumble restart restored unique emulator ownership, Bumble
+TCP and HCI responsiveness, serial availability, and Android Bluetooth `ON`.
+The initial subsequent calibration series did not establish repeatable behavioral
+readiness: one cold lifecycle was application-invalid under a System UI ANR,
+one warm lifecycle connected after the GATT bound, two valid lifecycles
+reported successful fixture notification but did not expose motion in the app
+within 2,000 ms, and one intervening valid lifecycle passed. Because two
+consecutive unchanged passes were not obtained, the Bumble route remained
+unqualified at that checkpoint.
+
+Sequence 20 was executed after the sequence-19 stop and before that diagnosis
+was complete. Its technically valid tablet result is retained as supporting
+evidence but excluded from confirmatory counts under anomaly `A-007`. No raw
+record is relabeled or removed.
+
+A targeted follow-up then produced two consecutive, fully captured warm-route
+passes (`calibration-requalification-bumble-011` and `012`) without an
+intervening configuration change. A preceding diagnostic lifecycle (`010`)
+crossed the stimulus boundary but had a compromised per-run capture after an
+operator path-resolution error; it is retained transparently and excluded
+from the qualifying pair. The pair requalified the route, after which
+`c019-retry03-bumble-dropped-r04` validly passed the dropped-notification case.
+
+Only after sequence 19 completed, a fresh tablet readiness check and deliberate
+inter-route interval preceded `c020-retry01-tablet-malformed-r02`. That
+replacement validly passed. It is the eligible sequence-20 result, while the
+original pass remains available solely as supporting evidence through
+`automation/evidence/dispositions/pilot-v1.json`. Sequence 21 is next.
+

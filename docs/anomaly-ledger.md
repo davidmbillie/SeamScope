@@ -12,6 +12,8 @@ or interpretation, not the apparent inconvenience of the underlying event.
 | A-004 | Low | Accepted | Supporting calibration | One retrospectively appended intervention event has an earlier action timestamp than its preceding event. |
 | A-005 | Informational | Accepted | Confirmatory artifacts | Seven duplicate-content groups are explained by deterministic outputs. |
 | A-006 | Informational | Resolved | Freeze identity | Current automation lock differs post-freeze; exact frozen lock is retained in the declared Git baseline. |
+| A-007 | Moderate | Resolved | Confirmatory ordering | Sequence 20 was executed after sequence 19 activated the stop rule; the original pass is excluded and a post-requalification replacement is eligible. |
+| A-008 | Low | Accepted | Supporting calibration | Calibration 010 crossed stimulus with a path-resolution error that prevented its normal per-run capture. |
 
 ## A-001: exact frozen APK recovered
 
@@ -90,3 +92,40 @@ confirmed the frozen SHA-256
 Impact: the current research tooling has evolved, while the exact execution-
 time dependency declaration remains recoverable from the frozen Git identity.
 The change does not claim to be part of the executed apparatus.
+
+## A-007: sequence 20 collected across a stop-rule boundary
+
+Sequence 19 (`c019-bumble-dropped-r04`) and its two permitted retries were
+invalid before stimulus at the BLE setup boundary. The third attempt activated
+the frozen stop rule. The following tablet reference,
+`c020-tablet-malformed-r02`, was nevertheless started before the required
+Bumble diagnosis and requalification were complete. It was technically valid,
+passed its declared assertions, and disconnected cleanly, but its execution
+order departed from the frozen rule that diagnosis precede another planned
+run.
+
+Disposition: the raw record and verdict remain immutable. The passing original
+is retained as supporting evidence but excluded from confirmatory counts by
+`automation/evidence/dispositions/pilot-v1.json`. After two consecutive Bumble
+requalification passes and valid completion of sequence 19, sequence 20 was
+repeated as `c020-retry01-tablet-malformed-r02`; the replacement also passed
+and is the eligible confirmatory result. This outcome-independent exclusion of
+a passing record preserves the frozen ordering rule without silently relabeling
+or deleting favorable evidence.
+
+## A-008: calibration 010 capture-path error
+
+The first targeted follow-up lifecycle after the second stop used relative
+evidence paths while the runner's working directory was `automation/`. The
+scenario crossed the stimulus boundary and failed its completed-interval
+observation, but the usual Appium, logcat, serial, and Bumble captures were not
+written into its pre-created run directory. The managed-runner console showed
+the outcome, and the fixture's subsequent status showed that both commands had
+been issued.
+
+Impact: `calibration-requalification-bumble-010` is retained as a valid but
+capture-compromised diagnostic and is excluded from the qualifying pair. Its
+stimulus markers and final boundary event were appended as explicit
+reconstructions rather than presented as original normalized capture. All
+subsequent paths were absolute; calibrations `011` and `012` were fully
+captured and supplied the two consecutive passes used for requalification.

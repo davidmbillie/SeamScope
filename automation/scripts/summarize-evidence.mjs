@@ -13,6 +13,13 @@ const DEFAULT_PLAN = path.join(
   'plans',
   'pilot-v1-confirmatory.json',
 );
+const DEFAULT_DISPOSITIONS = path.join(
+  repositoryRoot,
+  'automation',
+  'evidence',
+  'dispositions',
+  'pilot-v1.json',
+);
 const DEFAULT_DIAGNOSTICS = [
   'calibration-isolation-tablet-005',
   'calibration-isolation-bumble-001',
@@ -23,6 +30,7 @@ function parseArguments(argv) {
   const options = {
     studyRoot: DEFAULT_STUDY,
     planPath: DEFAULT_PLAN,
+    dispositionsPath: DEFAULT_DISPOSITIONS,
     outputRoot: null,
     diagnosticRunIds: DEFAULT_DIAGNOSTICS,
   };
@@ -37,6 +45,9 @@ function parseArguments(argv) {
       index += 1;
     } else if (argument === '--output' && value) {
       options.outputRoot = path.resolve(value);
+      index += 1;
+    } else if (argument === '--dispositions' && value) {
+      options.dispositionsPath = path.resolve(value);
       index += 1;
     } else if (argument === '--diagnostic-run' && value) {
       if (options.diagnosticRunIds === DEFAULT_DIAGNOSTICS) {
@@ -184,16 +195,27 @@ function markdownTable(rows, columns) {
 export async function summarizeEvidence({
   studyRoot,
   planPath,
+  dispositionsPath = null,
   diagnosticRunIds = DEFAULT_DIAGNOSTICS,
 }) {
-  const [study, plan, directoryEntries] = await Promise.all([
+  const [study, plan, dispositions, directoryEntries] = await Promise.all([
     readJson(path.join(studyRoot, 'study-manifest.json')),
     readJson(planPath),
+    dispositionsPath
+      ? readJson(dispositionsPath)
+      : Promise.resolve({studyId: null, excludedConfirmatoryRuns: []}),
     readdir(path.join(studyRoot, 'runs'), {withFileTypes: true}),
   ]);
   if (study.protocolVersion !== plan.protocolVersion) {
     throw new Error('The study and run plan protocol versions differ.');
   }
+  if (dispositionsPath && study.studyId !== dispositions.studyId) {
+    throw new Error('The study and run dispositions identify different studies.');
+  }
+
+  const excludedByRunId = new Map(
+    dispositions.excludedConfirmatoryRuns.map(item => [item.runId, item]),
+  );
 
   const scheduleByRunId = new Map(plan.schedule.map(item => [item.plannedRunId, item]));
   const confirmatoryNames = directoryEntries
@@ -205,7 +227,7 @@ export async function summarizeEvidence({
       return leftItem.sequence - rightItem.sequence || retryNumber(left) - retryNumber(right);
     });
 
-  const runs = [];
+  const retainedRuns = [];
   for (const runId of confirmatoryNames) {
     const schedule = scheduleByRunId.get(plannedRunIdFor(runId));
     if (!schedule) throw new Error(`${runId} does not resolve to a frozen schedule item.`);
@@ -215,7 +237,7 @@ export async function summarizeEvidence({
         throw new Error(`${runId} manifest ${field} differs from the frozen plan.`);
       }
     }
-    runs.push({
+    retainedRuns.push({
       sequence: schedule.sequence,
       block: schedule.block,
       role: schedule.role,
@@ -235,6 +257,10 @@ export async function summarizeEvidence({
       ...record.timing,
     });
   }
+  const excludedRuns = retainedRuns
+    .filter(run => excludedByRunId.has(run.runId))
+    .map(run => ({...run, disposition: excludedByRunId.get(run.runId)}));
+  const runs = retainedRuns.filter(run => !excludedByRunId.has(run.runId));
 
   const diagnosticRuns = [];
   for (const runId of diagnosticRunIds) {
@@ -327,6 +353,8 @@ export async function summarizeEvidence({
             : 'in-progress',
       targetValidRuns: plan.targets.validRuns,
       confirmatoryAttempts: runs.length,
+      retainedConfirmatoryArtifacts: retainedRuns.length,
+      excludedConfirmatoryRuns: excludedRuns.length,
       attemptedSchedulePositions: attemptedSequences.size,
       completedSchedulePositions: validSequences.size,
       validRuns: validRuns.length,
@@ -345,6 +373,7 @@ export async function summarizeEvidence({
     conditions: conditionRows,
     timings: timingRows,
     runs,
+    excludedRuns,
     diagnosticRuns,
   };
 }
@@ -407,13 +436,17 @@ export async function writeSummary(outputRoot, result) {
     `events, verdicts, the frozen study manifest, and the frozen run plan. It is ` +
     `an interim descriptive checkpoint, not the final confirmatory result.\n\n` +
     `- Confirmatory attempts: ${result.summary.confirmatoryAttempts}\n` +
+    `- Retained confirmatory artifacts: ${result.summary.retainedConfirmatoryArtifacts}\n` +
+    `- Excluded by declared disposition: ${result.summary.excludedConfirmatoryRuns}\n` +
     `- Valid runs: ${result.summary.validRuns} ` +
     `(${result.summary.validPasses} pass, ${result.summary.validFailures} fail)\n` +
     `- Invalid pre-stimulus attempts: ${result.summary.invalidPreStimulusAttempts}\n` +
     `- Next incomplete sequence: ${result.summary.nextIncompleteSequence} ` +
     `(${result.summary.nextIncompleteRunId})\n\n` +
     `${markdownTable(displayConditions, ['Condition', 'Target', 'Attempts', 'Valid', 'Invalid'])}\n\n` +
-    `Diagnostic runs are reported separately and never enter confirmatory counts. ` +
+    `Excluded runs remain retained under \`excludedRuns\` with their declared ` +
+    `disposition but do not enter confirmatory counts. Diagnostic runs are ` +
+    `reported separately and never enter confirmatory counts. ` +
     `Timing summaries are descriptive and retain the route and metric strata.\n`;
   await Promise.all(
     Object.entries(files).map(([name, contents]) =>
