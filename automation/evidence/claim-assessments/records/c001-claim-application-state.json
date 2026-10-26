@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "0.1-draft",
+  "assessmentId": "c001-injected-healthy-r01--claim.application-state-v1",
+  "catalogRef": "catalog://seamscope/pilot-v1/claim-properties-v1",
+  "verdictRef": "artifact://pilot-v1/runs/c001-injected-healthy-r01/verdict.json",
+  "executionValidity": "valid",
+  "testOutcome": "pass",
+  "claim": {
+    "id": "claim.application-state-v1",
+    "proposition": "Configured accepted observations produce the expected threshold, application-state, and visible-UI behavior.",
+    "assuranceTarget": "Application state model and visible UI"
+  },
+  "route": {
+    "id": "injected-v1",
+    "configurationRef": "artifact://pilot-v1/runs/c001-injected-healthy-r01/manifest.json",
+    "evidenceRefs": [
+      "artifact://pilot-v1/runs/c001-injected-healthy-r01/events.jsonl",
+      "artifact://pilot-v1/runs/c001-injected-healthy-r01/final.png",
+      "artifact://pilot-v1/runs/c001-injected-healthy-r01/verdict.json"
+    ]
+  },
+  "propertyScope": "identified-open-world",
+  "properties": [
+    {
+      "id": "property.threshold-state-transition",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c001-injected-healthy-r01/events.jsonl",
+        "repo://apps/mobile/src/model/motionState.ts"
+      ]
+    },
+    {
+      "id": "property.visible-ui-representation",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c001-injected-healthy-r01/events.jsonl",
+        "artifact://pilot-v1/runs/c001-injected-healthy-r01/final.png"
+      ]
+    }
+  ],
+  "claimDisposition": "supports",
+  "supportedInterpretation": "For the recorded configuration and inputs, accepted semantic observations produced the expected application-state transitions and visible UI states.",
+  "exclusions": [
+    "This assessment does not support BLE discovery, connection, subscription, notification-delivery, payload-decoding, radio, or peripheral-integration claims."
+  ],
+  "residualUncertainty": [
+    "The catalog contains identified properties and may omit unknown dependencies.",
+    "Behavior outside the recorded inputs, versions, and observation bounds was not evaluated."
+  ]
+}

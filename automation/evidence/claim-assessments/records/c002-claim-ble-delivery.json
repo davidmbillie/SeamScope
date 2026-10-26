@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "0.1-draft",
+  "assessmentId": "c002-bumble-healthy-r01--claim.ble-delivery-v1",
+  "catalogRef": "catalog://seamscope/pilot-v1/claim-properties-v1",
+  "verdictRef": "artifact://pilot-v1/runs/c002-bumble-healthy-r01/verdict.json",
+  "executionValidity": "valid",
+  "testOutcome": "pass",
+  "claim": {
+    "id": "claim.ble-delivery-v1",
+    "proposition": "A configured BLE notification traverses and is accepted at the BLE/application boundary.",
+    "assuranceTarget": "Configured BLE/application delivery boundary"
+  },
+  "route": {
+    "id": "serial-ble-v1",
+    "configurationRef": "artifact://pilot-v1/runs/c002-bumble-healthy-r01/manifest.json",
+    "evidenceRefs": [
+      "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+      "artifact://pilot-v1/runs/c002-bumble-healthy-r01/serial.log",
+      "artifact://pilot-v1/runs/c002-bumble-healthy-r01/bumble.log",
+      "artifact://pilot-v1/runs/c002-bumble-healthy-r01/verdict.json"
+    ]
+  },
+  "propertyScope": "identified-open-world",
+  "properties": [
+    {
+      "id": "property.ble-discovery",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/bumble.log"
+      ]
+    },
+    {
+      "id": "property.ble-connection",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/serial.log"
+      ]
+    },
+    {
+      "id": "property.gatt-subscription",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/bumble.log"
+      ]
+    },
+    {
+      "id": "property.notification-delivery",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/serial.log",
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/bumble.log"
+      ]
+    },
+    {
+      "id": "property.ble-payload-decoding",
+      "treatment": "exercised",
+      "basisRefs": [
+        "artifact://pilot-v1/runs/c002-bumble-healthy-r01/events.jsonl",
+        "repo://apps/mobile/src/signals/parseBleObservation.ts"
+      ]
+    }
+  ],
+  "claimDisposition": "supports",
+  "supportedInterpretation": "For the recorded configuration and execution, the configured BLE notification traversed the evidenced delivery boundary, was decoded, and produced the expected downstream behavior.",
+  "exclusions": [
+    "This assessment does not support general RF performance, a reliability rate, alternate-device behavior, source provenance, regulatory compliance, or deployment-environment behavior."
+  ],
+  "residualUncertainty": [
+    "The catalog contains identified properties and may omit unknown dependencies.",
+    "Uncharacterized RF conditions and behavior outside the recorded devices, inputs, versions, and observation bounds remain outside the claim."
+  ]
+}

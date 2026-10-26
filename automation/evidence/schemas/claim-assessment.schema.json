@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seamscope.local/schemas/claim-assessment.schema.json",
+  "title": "SeamScope draft verdict-local claim assessment",
+  "description": "Illustrative per-execution, per-claim projection; not an interchange standard.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "assessmentId",
+    "catalogRef",
+    "verdictRef",
+    "executionValidity",
+    "testOutcome",
+    "claim",
+    "route",
+    "propertyScope",
+    "properties",
+    "claimDisposition",
+    "supportedInterpretation",
+    "exclusions",
+    "residualUncertainty"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "0.1-draft"},
+    "assessmentId": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"},
+    "catalogRef": {"type": "string", "minLength": 1},
+    "verdictRef": {"type": "string", "minLength": 1},
+    "executionValidity": {"enum": ["valid", "invalid"]},
+    "testOutcome": {"enum": ["pass", "fail", "error", "notEvaluated"]},
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "proposition", "assuranceTarget"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^claim\\.[a-z0-9.-]+$"},
+        "proposition": {"type": "string", "minLength": 1},
+        "assuranceTarget": {"type": "string", "minLength": 1}
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "configurationRef", "evidenceRefs"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "configurationRef": {"type": "string", "minLength": 1},
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "propertyScope": {"const": "identified-open-world"},
+    "properties": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "treatment", "basisRefs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^property\\.[a-z0-9.-]+$"},
+          "treatment": {
+            "enum": [
+              "exercised",
+              "validlyRepresented",
+              "unvalidatedSubstitution",
+              "bypassed"
+            ]
+          },
+          "basisRefs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "representation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "referenceBoundaryRef",
+              "criterionRef",
+              "validationEvidenceRefs",
+              "envelopeRef",
+              "changeTriggers"
+            ],
+            "properties": {
+              "referenceBoundaryRef": {"type": "string", "minLength": 1},
+              "criterionRef": {"type": "string", "minLength": 1},
+              "validationEvidenceRefs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "minLength": 1}
+              },
+              "envelopeRef": {"type": "string", "minLength": 1},
+              "changeTriggers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"treatment": {"const": "validlyRepresented"}}},
+            "then": {"required": ["representation"]},
+            "else": {"not": {"required": ["representation"]}}
+          }
+        ]
+      }
+    },
+    "claimDisposition": {
+      "enum": [
+        "supports",
+        "challenges",
+        "notSupportedByRoute",
+        "inconclusive",
+        "notEvaluated"
+      ]
+    },
+    "supportedInterpretation": {"type": "string", "minLength": 1},
+    "exclusions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "residualUncertainty": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"executionValidity": {"const": "invalid"}}},
+      "then": {
+        "properties": {
+          "testOutcome": {"const": "notEvaluated"},
+          "claimDisposition": {"const": "notEvaluated"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"testOutcome": {"const": "notEvaluated"}}},
+      "then": {"properties": {"executionValidity": {"const": "invalid"}}}
+    }
+  ]
+}

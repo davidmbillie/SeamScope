@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "0.1-draft",
+  "catalogId": "catalog://seamscope/pilot-v1/claim-properties-v1",
+  "propertyScope": "identified-open-world",
+  "properties": [
+    {
+      "id": "property.threshold-state-transition",
+      "label": "Threshold and state transition",
+      "definition": "The application applies the configured threshold and transitions its motion state for the accepted observation sequence."
+    },
+    {
+      "id": "property.visible-ui-representation",
+      "label": "Visible UI representation",
+      "definition": "The observable UI represents the resulting application state and completed motion interval."
+    },
+    {
+      "id": "property.ble-discovery",
+      "label": "BLE discovery",
+      "definition": "The configured peripheral is discovered through the executed BLE route."
+    },
+    {
+      "id": "property.ble-connection",
+      "label": "BLE connection",
+      "definition": "The application and configured peripheral establish the BLE link used by the execution."
+    },
+    {
+      "id": "property.gatt-subscription",
+      "label": "GATT subscription",
+      "definition": "The application subscribes to the configured GATT notification characteristic before stimulus."
+    },
+    {
+      "id": "property.notification-delivery",
+      "label": "Notification delivery",
+      "definition": "The configured observation is transmitted as a BLE notification and received on the application side of the boundary."
+    },
+    {
+      "id": "property.ble-payload-decoding",
+      "label": "BLE payload decoding",
+      "definition": "The application decodes the received BLE payload into the semantic observation consumed by its state model."
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim.application-state-v1",
+      "proposition": "Configured accepted observations produce the expected threshold, application-state, and visible-UI behavior.",
+      "assuranceTarget": "Application state model and visible UI",
+      "materialPropertyIds": [
+        "property.threshold-state-transition",
+        "property.visible-ui-representation"
+      ]
+    },
+    {
+      "id": "claim.ble-delivery-v1",
+      "proposition": "A configured BLE notification traverses and is accepted at the BLE/application boundary.",
+      "assuranceTarget": "Configured BLE/application delivery boundary",
+      "materialPropertyIds": [
+        "property.ble-discovery",
+        "property.ble-connection",
+        "property.gatt-subscription",
+        "property.notification-delivery",
+        "property.ble-payload-decoding"
+      ]
+    }
+  ]
+}

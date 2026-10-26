@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "0.1-draft",
+  "assessmentId": "invalid-fixture--bypassed-property-supports",
+  "catalogRef": "catalog://seamscope/pilot-v1/claim-properties-v1",
+  "verdictRef": "fixture://invalid/bypassed-property-supports",
+  "executionValidity": "valid",
+  "testOutcome": "pass",
+  "claim": {
+    "id": "claim.ble-delivery-v1",
+    "proposition": "A configured BLE notification traverses and is accepted at the BLE/application boundary.",
+    "assuranceTarget": "Configured BLE/application delivery boundary"
+  },
+  "route": {
+    "id": "injected-v1",
+    "configurationRef": "fixture://invalid/configuration",
+    "evidenceRefs": ["fixture://invalid/evidence"]
+  },
+  "propertyScope": "identified-open-world",
+  "properties": [
+    {"id": "property.ble-discovery", "treatment": "bypassed", "basisRefs": ["fixture://invalid/basis"]},
+    {"id": "property.ble-connection", "treatment": "bypassed", "basisRefs": ["fixture://invalid/basis"]},
+    {"id": "property.gatt-subscription", "treatment": "bypassed", "basisRefs": ["fixture://invalid/basis"]},
+    {"id": "property.notification-delivery", "treatment": "bypassed", "basisRefs": ["fixture://invalid/basis"]},
+    {"id": "property.ble-payload-decoding", "treatment": "bypassed", "basisRefs": ["fixture://invalid/basis"]}
+  ],
+  "claimDisposition": "supports",
+  "supportedInterpretation": "This deliberately contradictory fixture must be rejected.",
+  "exclusions": ["Fixture only."],
+  "residualUncertainty": ["Fixture only."]
+}

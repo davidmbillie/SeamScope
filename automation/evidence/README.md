@@ -128,6 +128,19 @@ The command validates the named immutable run before producing a sanitized
 JSON/CSV source and SVG. It fails if the run identity, case, route, verdict, or
 selected events no longer match the declared figure.
 
+Validate the illustrative verdict-local claim assessments:
+
+```powershell
+npm run verdict-records:check
+```
+
+This checks the draft JSON structures, their alignment with the versioned
+claim/property catalog, the distinction among execution validity, ordinary
+test outcome, and claim disposition, and the rule that a bypassed or
+unvalidated material property cannot coexist with a supporting disposition.
+The companion is documented in
+[`claim-assessments/README.md`](claim-assessments/README.md).
+
 ## Invariants already enforced
 
 - Run identifiers and run directories cannot be silently overwritten.
@@ -146,7 +159,7 @@ infrastructure diagnostics are not collapsed into one undifferentiated log.
 
 ## Schemas
 
-The JSON Schema files in `schemas/` define the version-1 contracts, including
-the sanitized freeze record. The current store performs core invariant checks
-without an external validation package. Schema validation can be added to the
-collection-completeness gate without changing the stored representation.
+The JSON Schema files in `schemas/` define the version-1 evidence contracts,
+including the sanitized freeze record, plus the explicitly draft `0.1-draft`
+claim-assessment companion. The companion uses AJV for structural validation
+and a small semantic validator for catalog and cross-property rules.

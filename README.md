@@ -103,6 +103,12 @@ The completed frozen-study accounting and bounded interpretation are in
 for the sole valid confirmatory failure is documented in
 [docs/sequence46-evidence-chain.md](docs/sequence46-evidence-chain.md).
 
+The paper's lightweight, SACM-compatible verdict projection is implemented as
+an illustrative machine-readable companion in
+[automation/evidence/claim-assessments/](automation/evidence/claim-assessments/README.md).
+It separates execution validity, ordinary test outcome, and claim disposition
+across two claims and two passing routes; it is not proposed as a standard.
+
 For daily development, open [SeamScope.code-workspace](SeamScope.code-workspace)
 and follow [docs/vscode-workflow.md](docs/vscode-workflow.md). The workspace
 opens the executable fixture and the separate IST paper notebook together.
