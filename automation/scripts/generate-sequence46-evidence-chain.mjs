@@ -65,8 +65,8 @@ const selections = [
     find: event => event.eventType === 'drop' && event.sequence === 1,
   },
   {
-    lane: 'Application',
-    label: 'No transition during 2,000 ms window',
+    lane: 'Appium-observed state',
+    label: 'No transition observed during 2,000 ms window',
     find: event =>
       event.eventType === 'app-state' &&
       event.details?.state === 'stopped' &&
@@ -79,7 +79,7 @@ const selections = [
   },
   {
     lane: 'Fixture / BLE',
-    label: 'Sequence 2 notification status 0',
+    label: 'Sequence 2 callback: status=1, code=0',
     find: event =>
       event.eventType === 'notification-status' &&
       event.eventIndex === 14 &&
@@ -91,7 +91,7 @@ const selections = [
     find: event => event.eventType === 'ble-disconnected',
   },
   {
-    lane: 'Application',
+    lane: 'Appium-observed state',
     label: 'Sequence 2 observed: In Motion',
     find: event =>
       event.eventType === 'app-state' &&
@@ -105,7 +105,7 @@ const selections = [
   },
   {
     lane: 'Fixture / BLE',
-    label: 'Sequence 3 notification status 5',
+    label: 'Sequence 3 callback: status=5, code=0',
     find: event =>
       event.eventType === 'notification-status' &&
       event.details?.line === 'BLE NOTIFY STATUS 5 CODE 0',
@@ -179,7 +179,9 @@ async function buildData() {
     outcome: verdict.outcome,
     failureBoundary: verdict.failureBoundary,
     manualIntervention: verdict.manualIntervention,
-    timeOrigin: 'First outcome-bearing stimulus (sequence 1)',
+    timeOrigin: 'Runner-observed first stimulus marker (sequence 1)',
+    timeSemantics:
+      'Elapsed offsets are assigned by the runner when it records or receives each event; they are not synchronized source clocks.',
     displayPrecision: 'milliseconds rounded to one decimal place',
     selectionPurpose:
       'Explain the sole valid confirmatory failure as a source-separated evidence chain, not estimate its frequency.',
@@ -212,7 +214,7 @@ function laneColor(lane) {
   return {
     Runner: '#665191',
     'Fixture / BLE': '#215a75',
-    Application: '#18734b',
+    'Appium-observed state': '#18734b',
     'Appium verdict': '#9a3f32',
   }[lane];
 }
@@ -221,7 +223,7 @@ function buildSvg(data) {
   const laneX = {
     Runner: 350,
     'Fixture / BLE': 660,
-    Application: 970,
+    'Appium-observed state': 970,
     'Appium verdict': 1240,
   };
   const startY = 170;
@@ -266,12 +268,12 @@ function buildSvg(data) {
   </style>
   <rect width="1400" height="760" fill="#f5f7f8"/>
   <text x="40" y="44" class="title">A valid run exposes the physical delivery boundary</text>
-  <text x="40" y="70" class="subtitle">${escapeXml(data.runId)} · event position preserves order, not proportional time</text>
+  <text x="40" y="70" class="subtitle">${escapeXml(data.runId)} · runner-observed order; clocks are not source-synchronized</text>
   <rect x="34" y="92" width="1332" height="590" rx="12" fill="#ffffff" stroke="#b7c0c8"/>
   ${pieces.join('\n  ')}
   <rect x="930" y="700" width="430" height="36" rx="7" fill="#9a3f32" opacity="0.12"/>
   <text x="1145" y="723" text-anchor="middle" class="outcome" fill="#8a3328">VALID / FAIL · BLE boundary</text>
-  <text x="40" y="723" class="note">The valid failure is retained because the first stimulus was issued; the physical disconnection remains part of the observed outcome.</text>
+  <text x="40" y="723" class="note">Route-specific postconditions confirm acceptance after the pre-invocation marker; the disconnection remains part of the observed outcome.</text>
 </svg>
 `;
 }

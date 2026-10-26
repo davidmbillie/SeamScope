@@ -380,6 +380,8 @@ export async function auditEvidence() {
   let structuredRunsValid = 0;
   let structuredEventsChecked = 0;
   let bumbleCapturesVerified = 0;
+  let validRunsPostconditionVerified = 0;
+  let stimulusPostconditionsVerified = 0;
 
   for (const runId of allRunNames) {
     const runRoot = path.join(runsRoot, runId);
@@ -495,6 +497,58 @@ export async function auditEvidence() {
         'Validity does not agree with whether the stimulus boundary was crossed.',
         {runId, validity: verdict.validity, stimulusIssued},
       );
+    }
+    if (confirmatorySet.has(runId) && verdict.validity === 'valid') {
+      const stimuli = events.filter(event => event.eventType === 'stimulus-issued');
+      let runPostconditionsVerified = true;
+      for (const stimulus of stimuli) {
+        const nextStimulus = events.find(
+          event =>
+            event.eventIndex > stimulus.eventIndex &&
+            event.eventType === 'stimulus-issued',
+        );
+        const segment = events.filter(
+          event =>
+            event.eventIndex > stimulus.eventIndex &&
+            (!nextStimulus || event.eventIndex < nextStimulus.eventIndex),
+        );
+        let accepted = false;
+        if (manifest.route === 'injected') {
+          accepted = segment.some(
+            event => event.eventType === 'app-state' || event.eventType === 'assertion',
+          );
+        } else {
+          accepted = segment.some(event => {
+            if (event.eventType !== 'command-accepted') return false;
+            const match = /^OK SPEED ([0-9]+(?:\.[0-9]+)?)$/.exec(
+              event.details?.line ?? '',
+            );
+            return match && Number(match[1]) === stimulus.details?.speed;
+          });
+        }
+        if (!accepted) {
+          runPostconditionsVerified = false;
+          addFinding(
+            findings,
+            'STIMULUS_POSTCONDITION_MISSING',
+            'error',
+            confirmatorySet.has(runId) ? 'confirmatory-run' : 'supporting-run',
+            'A valid run lacks route-specific evidence after a pre-invocation stimulus marker.',
+            {
+              runId,
+              route: manifest.route,
+              stimulusEventIndex: stimulus.eventIndex,
+              sequence: stimulus.sequence,
+              speed: stimulus.details?.speed,
+            },
+          );
+        } else {
+          stimulusPostconditionsVerified += 1;
+        }
+      }
+      if (runPostconditionsVerified && stimuli.length > 0) {
+        validRunsPostconditionVerified += 1;
+      }
     }
     const interventionObserved = events.some(
       event => event.eventType === 'manual-intervention',
@@ -769,6 +823,8 @@ export async function auditEvidence() {
       structuredRunsSchemaValid: structuredRunsValid,
       structuredEventsChecked,
       bumbleCapturesByteVerified: bumbleCapturesVerified,
+      validRunsPostconditionVerified,
+      stimulusPostconditionsVerified,
       inventoryEntries: inventory.length,
       duplicateArtifactGroups: duplicateArtifactGroups.length,
     },

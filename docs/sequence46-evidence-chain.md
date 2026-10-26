@@ -16,26 +16,27 @@ complete, and the integrity audit byte-verified its 278,999-byte Bumble slice.
 
 **Figure X. Source-separated evidence chain for the sole valid confirmatory
 failure.** The Bumble-backed run first behaved as intended: sequence 1 was
-deliberately dropped and produced no application transition, while sequence 2
-was delivered successfully and later became observable as In Motion. The
-physical BLE link disconnected before completion. Although the fixture accepted
-the sequence-3 speed-zero command, its notification status was 5 rather than 0,
-and the application did not display a completed interval within 2,000 ms. The
-run remained a valid failure because it had crossed the predeclared stimulus
-boundary. Event placement preserves source order rather than proportional
-elapsed time.
+deliberately dropped and produced no observed application transition, while
+sequence 2 later became observable as In Motion after callback `status=1,
+code=0`. The physical BLE link disconnected before completion. Although the
+fixture accepted the sequence-3 speed-zero command, the later callback was
+`status=5, code=0`, and Appium did not observe a completed interval within
+2,000 ms. The run remained a valid failure because route-specific evidence
+corroborated command acceptance after the pre-invocation marker. Event offsets
+are runner-observed and do not synchronize the source clocks.
 
 ## Accessibility text
 
-A four-lane event diagram separates runner, fixture and BLE, application, and
-Appium-verdict observations. The runner issues sequence 1, which the fixture
-deliberately drops. The application remains stopped during the negative window.
-The runner issues sequence 2; the fixture reports notification success, then
-the physical BLE link disconnects. The application subsequently exposes the
-sequence-2 In Motion state. The runner issues sequence 3 to stop motion, but
-the fixture reports notification status 5. Appium then fails to observe the
-completed interval. The record is classified valid and failed at the BLE
-boundary.
+A four-lane event diagram separates runner, fixture and BLE, Appium-observed
+application state, and Appium-verdict observations. The runner issues sequence
+1, which the fixture deliberately drops. Appium observes no transition during
+the negative window. The runner issues sequence 2; the fixture records callback
+`status=1, code=0`, then the physical BLE link disconnects. Appium subsequently
+observes the sequence-2 In Motion state. The runner issues sequence 3 to stop
+motion, after which the fixture records callback `status=5, code=0`. Appium then
+fails to observe the completed interval. The record is classified valid and
+failed at the BLE boundary. No undocumented meaning is assigned to either
+numeric callback field.
 
 ## Main-text allocation
 

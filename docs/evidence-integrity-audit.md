@@ -27,6 +27,8 @@ because the current `artifacts` tree is the untouched private evidence layer.
 | Normalized events validated | 2,587 |
 | Run records valid against the version-1 schemas | 209 |
 | Confirmatory Bumble slices compared with source-session bytes | 65 |
+| Valid retained runs with route-specific postconditions verified | 51 |
+| Stimulus postconditions verified across those valid runs | 128 |
 | Files entered in the current SHA-256 inventory | 839 |
 | Duplicate-content groups among confirmatory artifacts | 9 |
 
@@ -77,13 +79,22 @@ preceding attempt. The disposition registry identifies the eligible
 post-requalification replacement at sequence 20. All 50 schedule positions are
 complete with 50 valid outcomes: 49 passes and one failure.
 
-Every valid run crosses the declared `stimulus-issued` boundary, and every
-invalid run remains before it. Final normalized events agree with the stored
-verdicts. All valid passing runs contain passing normalized assertions and both
-declared checkpoint screenshots. The first invalid sequence-6 attempt is the
-only confirmatory record missing its usual failure screenshot and UI hierarchy;
-its Appium, `logcat`, serial, Bumble, event, and verdict evidence remains
-available.
+Every valid run contains a `stimulus-issued` marker, and every invalid run
+remains before it. Because the frozen implementations emitted that marker
+immediately before invoking the route operation, the audit now also checks the
+route-specific postcondition after every marker. All 51 retained valid records
+(50 eligible plus the retained, excluded sequence-20 pass) satisfied those
+checks across 128 stimuli: BLE routes retained a matching `OK SPEED`
+acknowledgement, while injection retained a downstream Appium-observed state or
+assertion before the next stimulus. The marker is therefore treated as a
+pre-invocation record whose stated acceptance boundary is corroborated by its
+postcondition, not as acceptance evidence by itself.
+
+Final normalized events agree with the stored verdicts. All valid passing runs
+contain passing normalized assertions and both declared checkpoint screenshots.
+The first invalid sequence-6 attempt is the only confirmatory record missing
+its usual failure screenshot and UI hierarchy; its Appium, `logcat`, serial,
+Bumble, event, and verdict evidence remains available.
 
 All 65 audited Bumble-backed confirmatory captures contain metadata and a
 retained Bumble slice. Each slice has the declared length and is byte-identical
@@ -120,8 +131,10 @@ run records.
 The audit does not convert invalid setup attempts into application failures or
 interpret the one valid failure beyond its retained boundary evidence. It
 establishes that the final counts, timings, route distinctions, stop-rule
-accounts, requalifications, sequence-20 disposition, and completion of all 50
-planned positions are traceable to internally consistent records. Remaining
-warnings concern one invalid confirmatory attempt's missing failure capture and
-one supporting-run timestamp reversal; both are disclosed in
+accounts, requalifications, sequence-20 disposition, route-specific stimulus
+postconditions, and completion of all 50 planned positions are traceable to
+internally consistent records. It remains an artifact-integrity and
+internal-consistency audit rather than independent methodological validation.
+Remaining warnings concern one invalid confirmatory attempt's missing failure
+capture and one supporting-run timestamp reversal; both are disclosed in
 `docs/anomaly-ledger.md`.

@@ -63,18 +63,19 @@ route is generally faster.
 Confirmatory run `c046-bumble-dropped-r10-retry01` is the only valid failure.
 It subscribed in 4,384.9 ms, deliberately dropped sequence 1, and correctly
 showed no transition during the 2,000 ms negative-observation window. Healthy
-sequence 2 was then delivered successfully and produced the expected In Motion
-state with the visible sequence gap after 1,980.3 ms.
+sequence 2 then produced callback `status=1, code=0` and became observable as
+the expected In Motion state with the visible sequence gap after 1,980.3 ms.
 
 The physical BLE link disconnected before the completion step. The fixture
 accepted the sequence-3 speed-zero command, recorded a transmit attempt, and
-reported notification status 5 rather than the status 0 seen for the preceding
-delivery. The application did not receive an accepted stop observation and
-remained In Motion through the 2,000 ms bound. The retained Bumble slice,
-fixture events, application state, Appium assertion, screenshot, UI hierarchy,
-and verdict independently preserve the failure chain. No in-run intervention
-occurred, and the run was not retried because it had crossed the frozen
-validity boundary.
+then produced callback `status=5, code=0`. The application did not receive an
+accepted stop observation and remained In Motion through the 2,000 ms bound.
+The retained Bumble slice, fixture events, Appium-observed state and assertion,
+screenshot, UI hierarchy, and verdict preserve the failure chain. The state
+and assertion records share the Appium scenario and are not treated as
+independent instruments. No in-run intervention occurred, and the run was not
+retried because route-specific evidence corroborated command acceptance after
+the frozen pre-invocation marker.
 
 This observation is not presented as a discovered defect in a commercial
 product, a BLE failure-rate estimate, or proof that physical execution is

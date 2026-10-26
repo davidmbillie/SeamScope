@@ -189,11 +189,13 @@ an undisclosed favorable window.
 
 `c046-bumble-dropped-r10-retry01` reached `SUBSCRIBED`, crossed the declared
 stimulus boundary, correctly observed the deliberate sequence-1 drop, and
-recovered to In Motion after successful delivery of sequence 2. The BLE link
-then disconnected. The fixture accepted the sequence-3 speed-zero command and
-recorded a transmit attempt, but its notification status was 5 rather than 0.
+recovered to In Motion after delivery of sequence 2. The corresponding raw
+callback line was `BLE NOTIFY STATUS 1 CODE 0`. The BLE link then disconnected.
+The fixture accepted the sequence-3 speed-zero command and recorded a transmit
+attempt, after which the raw callback line was `BLE NOTIFY STATUS 5 CODE 0`.
 The application remained In Motion and the completed-interval assertion timed
-out at 2,000 ms.
+out at 2,000 ms. The two numeric fields are retained literally here; no library
+success/failure meaning is inferred from either integer alone.
 
 Disposition: retain the run as `valid / fail` at the BLE boundary and count it
 toward the predeclared dropped-notification target. It was not retried because

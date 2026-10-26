@@ -9,7 +9,8 @@
   "outcome": "fail",
   "failureBoundary": "ble",
   "manualIntervention": false,
-  "timeOrigin": "First outcome-bearing stimulus (sequence 1)",
+  "timeOrigin": "Runner-observed first stimulus marker (sequence 1)",
+  "timeSemantics": "Elapsed offsets are assigned by the runner when it records or receives each event; they are not synchronized source clocks.",
   "displayPrecision": "milliseconds rounded to one decimal place",
   "selectionPurpose": "Explain the sole valid confirmatory failure as a source-separated evidence chain, not estimate its frequency.",
   "events": [
@@ -30,9 +31,9 @@
     {
       "eventIndex": 9,
       "millisecondsAfterFirstStimulus": 2151.7,
-      "lane": "Application",
+      "lane": "Appium-observed state",
       "eventType": "app-state",
-      "label": "No transition during 2,000 ms window"
+      "label": "No transition observed during 2,000 ms window"
     },
     {
       "eventIndex": 11,
@@ -46,7 +47,7 @@
       "millisecondsAfterFirstStimulus": 2210.3,
       "lane": "Fixture / BLE",
       "eventType": "notification-status",
-      "label": "Sequence 2 notification status 0"
+      "label": "Sequence 2 callback: status=1, code=0"
     },
     {
       "eventIndex": 15,
@@ -58,7 +59,7 @@
     {
       "eventIndex": 16,
       "millisecondsAfterFirstStimulus": 4148.3,
-      "lane": "Application",
+      "lane": "Appium-observed state",
       "eventType": "app-state",
       "label": "Sequence 2 observed: In Motion"
     },
@@ -74,7 +75,7 @@
       "millisecondsAfterFirstStimulus": 4206.7,
       "lane": "Fixture / BLE",
       "eventType": "notification-status",
-      "label": "Sequence 3 notification status 5"
+      "label": "Sequence 3 callback: status=5, code=0"
     },
     {
       "eventIndex": 22,
