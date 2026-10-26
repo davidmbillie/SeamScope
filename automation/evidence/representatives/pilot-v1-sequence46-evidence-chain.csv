@@ -1,0 +1,11 @@
+runId,validity,outcome,failureBoundary,eventIndex,millisecondsAfterFirstStimulus,lane,eventType,label
+c046-bumble-dropped-r10-retry01,valid,fail,ble,6,0,Runner,stimulus-issued,Sequence 1 stimulus issued (8.0)
+c046-bumble-dropped-r10-retry01,valid,fail,ble,8,31,Fixture / BLE,drop,Sequence 1 deliberately dropped
+c046-bumble-dropped-r10-retry01,valid,fail,ble,9,2151.7,Application,app-state,"No transition during 2,000 ms window"
+c046-bumble-dropped-r10-retry01,valid,fail,ble,11,2168,Runner,stimulus-issued,Sequence 2 recovery stimulus issued (8.0)
+c046-bumble-dropped-r10-retry01,valid,fail,ble,14,2210.3,Fixture / BLE,notification-status,Sequence 2 notification status 0
+c046-bumble-dropped-r10-retry01,valid,fail,ble,15,3399.8,Fixture / BLE,ble-disconnected,Physical BLE link disconnected
+c046-bumble-dropped-r10-retry01,valid,fail,ble,16,4148.3,Application,app-state,Sequence 2 observed: In Motion
+c046-bumble-dropped-r10-retry01,valid,fail,ble,18,4163.9,Runner,stimulus-issued,Sequence 3 completion stimulus issued (0.0)
+c046-bumble-dropped-r10-retry01,valid,fail,ble,21,4206.7,Fixture / BLE,notification-status,Sequence 3 notification status 5
+c046-bumble-dropped-r10-retry01,valid,fail,ble,22,6288.1,Appium verdict,assertion,"Completed interval absent after 2,000 ms"

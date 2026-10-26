@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+  <title id="title">Evidence chain for the valid sequence 46 failure</title>
+  <desc id="description">A source-separated event sequence shows a deliberate dropped notification, successful recovery delivery, physical BLE disconnection, unsuccessful completion notification, and a failed completed-interval assertion.</desc>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #17212b; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #4b5660; }
+    .lane { font-size: 15px; font-weight: 700; }
+    .time { font-size: 12px; font-variant-numeric: tabular-nums; fill: #4b5660; }
+    .event { font-size: 11px; font-weight: 600; }
+    .outcome { font-size: 15px; font-weight: 700; }
+    .note { font-size: 12px; fill: #4b5660; }
+  </style>
+  <rect width="1400" height="760" fill="#f5f7f8"/>
+  <text x="40" y="44" class="title">A valid run exposes the physical delivery boundary</text>
+  <text x="40" y="70" class="subtitle">c046-bumble-dropped-r10-retry01 · event position preserves order, not proportional time</text>
+  <rect x="34" y="92" width="1332" height="590" rx="12" fill="#ffffff" stroke="#b7c0c8"/>
+  <text x="350" y="126" text-anchor="middle" class="lane">Runner</text>
+  <line x1="350" y1="143" x2="350" y2="638" stroke="#c5ccd2" stroke-width="2"/>
+  <text x="660" y="126" text-anchor="middle" class="lane">Fixture / BLE</text>
+  <line x1="660" y1="143" x2="660" y2="638" stroke="#c5ccd2" stroke-width="2"/>
+  <text x="970" y="126" text-anchor="middle" class="lane">Application</text>
+  <line x1="970" y1="143" x2="970" y2="638" stroke="#c5ccd2" stroke-width="2"/>
+  <text x="1240" y="126" text-anchor="middle" class="lane">Appium verdict</text>
+  <line x1="1240" y1="143" x2="1240" y2="638" stroke="#c5ccd2" stroke-width="2"/>
+  <text x="120" y="175" text-anchor="end" class="time">+0.0 ms</text>
+  <line x1="140" y1="170" x2="1320" y2="170" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="350" cy="170" r="7" fill="#665191"/>
+  <rect x="364" y="154" width="250" height="32" rx="6" fill="#ffffff" stroke="#665191"/>
+  <text x="375" y="175" class="event">Sequence 1 stimulus issued (8.0)</text>
+  <text x="120" y="225" text-anchor="end" class="time">+31.0 ms</text>
+  <line x1="140" y1="220" x2="1320" y2="220" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="660" cy="220" r="7" fill="#215a75"/>
+  <rect x="674" y="204" width="250" height="32" rx="6" fill="#ffffff" stroke="#215a75"/>
+  <text x="685" y="225" class="event">Sequence 1 deliberately dropped</text>
+  <text x="120" y="275" text-anchor="end" class="time">+2151.7 ms</text>
+  <line x1="140" y1="270" x2="1320" y2="270" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="970" cy="270" r="7" fill="#18734b"/>
+  <rect x="984" y="254" width="250" height="32" rx="6" fill="#ffffff" stroke="#18734b"/>
+  <text x="995" y="275" class="event">No transition during 2,000 ms window</text>
+  <text x="120" y="325" text-anchor="end" class="time">+2168.0 ms</text>
+  <line x1="140" y1="320" x2="1320" y2="320" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="350" cy="320" r="7" fill="#665191"/>
+  <rect x="364" y="304" width="250" height="32" rx="6" fill="#ffffff" stroke="#665191"/>
+  <text x="375" y="325" class="event">Sequence 2 recovery stimulus issued (8.0)</text>
+  <text x="120" y="375" text-anchor="end" class="time">+2210.3 ms</text>
+  <line x1="140" y1="370" x2="1320" y2="370" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="660" cy="370" r="7" fill="#215a75"/>
+  <rect x="674" y="354" width="250" height="32" rx="6" fill="#ffffff" stroke="#215a75"/>
+  <text x="685" y="375" class="event">Sequence 2 notification status 0</text>
+  <text x="120" y="425" text-anchor="end" class="time">+3399.8 ms</text>
+  <line x1="140" y1="420" x2="1320" y2="420" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="660" cy="420" r="7" fill="#215a75"/>
+  <rect x="674" y="404" width="250" height="32" rx="6" fill="#ffffff" stroke="#215a75"/>
+  <text x="685" y="425" class="event">Physical BLE link disconnected</text>
+  <text x="120" y="475" text-anchor="end" class="time">+4148.3 ms</text>
+  <line x1="140" y1="470" x2="1320" y2="470" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="970" cy="470" r="7" fill="#18734b"/>
+  <rect x="984" y="454" width="250" height="32" rx="6" fill="#ffffff" stroke="#18734b"/>
+  <text x="995" y="475" class="event">Sequence 2 observed: In Motion</text>
+  <text x="120" y="525" text-anchor="end" class="time">+4163.9 ms</text>
+  <line x1="140" y1="520" x2="1320" y2="520" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="350" cy="520" r="7" fill="#665191"/>
+  <rect x="364" y="504" width="250" height="32" rx="6" fill="#ffffff" stroke="#665191"/>
+  <text x="375" y="525" class="event">Sequence 3 completion stimulus issued (0.0)</text>
+  <text x="120" y="575" text-anchor="end" class="time">+4206.7 ms</text>
+  <line x1="140" y1="570" x2="1320" y2="570" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="660" cy="570" r="7" fill="#215a75"/>
+  <rect x="674" y="554" width="250" height="32" rx="6" fill="#ffffff" stroke="#215a75"/>
+  <text x="685" y="575" class="event">Sequence 3 notification status 5</text>
+  <text x="120" y="625" text-anchor="end" class="time">+6288.1 ms</text>
+  <line x1="140" y1="620" x2="1320" y2="620" stroke="#e6e9ec" stroke-width="1"/>
+  <circle cx="1240" cy="620" r="7" fill="#9a3f32"/>
+  <rect x="976" y="604" width="250" height="32" rx="6" fill="#ffffff" stroke="#9a3f32"/>
+  <text x="987" y="625" class="event">Completed interval absent after 2,000 ms</text>
+  <rect x="930" y="700" width="430" height="36" rx="7" fill="#9a3f32" opacity="0.12"/>
+  <text x="1145" y="723" text-anchor="middle" class="outcome" fill="#8a3328">VALID / FAIL · BLE boundary</text>
+  <text x="40" y="723" class="note">The valid failure is retained because the first stimulus was issued; the physical disconnection remains part of the observed outcome.</text>
+</svg>

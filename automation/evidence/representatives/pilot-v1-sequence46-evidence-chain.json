@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1",
+  "studyId": "pilot-v1",
+  "protocolVersion": "pilot-v1-frozen",
+  "runId": "c046-bumble-dropped-r10-retry01",
+  "route": "bumble-ble",
+  "caseId": "dropped-notification-recovery",
+  "validity": "valid",
+  "outcome": "fail",
+  "failureBoundary": "ble",
+  "manualIntervention": false,
+  "timeOrigin": "First outcome-bearing stimulus (sequence 1)",
+  "displayPrecision": "milliseconds rounded to one decimal place",
+  "selectionPurpose": "Explain the sole valid confirmatory failure as a source-separated evidence chain, not estimate its frequency.",
+  "events": [
+    {
+      "eventIndex": 6,
+      "millisecondsAfterFirstStimulus": 0,
+      "lane": "Runner",
+      "eventType": "stimulus-issued",
+      "label": "Sequence 1 stimulus issued (8.0)"
+    },
+    {
+      "eventIndex": 8,
+      "millisecondsAfterFirstStimulus": 31,
+      "lane": "Fixture / BLE",
+      "eventType": "drop",
+      "label": "Sequence 1 deliberately dropped"
+    },
+    {
+      "eventIndex": 9,
+      "millisecondsAfterFirstStimulus": 2151.7,
+      "lane": "Application",
+      "eventType": "app-state",
+      "label": "No transition during 2,000 ms window"
+    },
+    {
+      "eventIndex": 11,
+      "millisecondsAfterFirstStimulus": 2168,
+      "lane": "Runner",
+      "eventType": "stimulus-issued",
+      "label": "Sequence 2 recovery stimulus issued (8.0)"
+    },
+    {
+      "eventIndex": 14,
+      "millisecondsAfterFirstStimulus": 2210.3,
+      "lane": "Fixture / BLE",
+      "eventType": "notification-status",
+      "label": "Sequence 2 notification status 0"
+    },
+    {
+      "eventIndex": 15,
+      "millisecondsAfterFirstStimulus": 3399.8,
+      "lane": "Fixture / BLE",
+      "eventType": "ble-disconnected",
+      "label": "Physical BLE link disconnected"
+    },
+    {
+      "eventIndex": 16,
+      "millisecondsAfterFirstStimulus": 4148.3,
+      "lane": "Application",
+      "eventType": "app-state",
+      "label": "Sequence 2 observed: In Motion"
+    },
+    {
+      "eventIndex": 18,
+      "millisecondsAfterFirstStimulus": 4163.9,
+      "lane": "Runner",
+      "eventType": "stimulus-issued",
+      "label": "Sequence 3 completion stimulus issued (0.0)"
+    },
+    {
+      "eventIndex": 21,
+      "millisecondsAfterFirstStimulus": 4206.7,
+      "lane": "Fixture / BLE",
+      "eventType": "notification-status",
+      "label": "Sequence 3 notification status 5"
+    },
+    {
+      "eventIndex": 22,
+      "millisecondsAfterFirstStimulus": 6288.1,
+      "lane": "Appium verdict",
+      "eventType": "assertion",
+      "label": "Completed interval absent after 2,000 ms"
+    }
+  ]
+}

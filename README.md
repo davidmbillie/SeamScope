@@ -98,6 +98,11 @@ failures are recorded in [docs/bumble-route.md](docs/bumble-route.md).
 The bounded first study is specified in
 [docs/experiment-plan.md](docs/experiment-plan.md).
 
+The completed frozen-study accounting and bounded interpretation are in
+[docs/interim-results.md](docs/interim-results.md). The source-separated figure
+for the sole valid confirmatory failure is documented in
+[docs/sequence46-evidence-chain.md](docs/sequence46-evidence-chain.md).
+
 For daily development, open [SeamScope.code-workspace](SeamScope.code-workspace)
 and follow [docs/vscode-workflow.md](docs/vscode-workflow.md). The workspace
 opens the executable fixture and the separate IST paper notebook together.

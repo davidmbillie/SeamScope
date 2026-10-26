@@ -116,6 +116,18 @@ report and SHA-256 inventory are written beneath
 `artifacts/evidence/pilot-v1/derived/integrity-audit` and remain ignored until
 the sanitized package is assembled.
 
+Generate and verify the paper-facing evidence chain for the sole valid
+confirmatory failure:
+
+```powershell
+npm run failure-chain:generate
+npm run failure-chain:check
+```
+
+The command validates the named immutable run before producing a sanitized
+JSON/CSV source and SVG. It fails if the run identity, case, route, verdict, or
+selected events no longer match the declared figure.
+
 ## Invariants already enforced
 
 - Run identifiers and run directories cannot be silently overwritten.
