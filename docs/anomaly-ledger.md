@@ -15,6 +15,8 @@ or interpretation, not the apparent inconvenience of the underlying event.
 | A-007 | Moderate | Resolved | Confirmatory ordering | Sequence 20 was executed after sequence 19 activated the stop rule; the original pass is excluded and a post-requalification replacement is eligible. |
 | A-008 | Low | Accepted | Supporting calibration | Calibration 010 crossed stimulus with a path-resolution error that prevented its normal per-run capture. |
 | A-009 | Low | Resolved | Confirmatory sequence 21 | The first manifest used the wrong configuration identifier and was stopped before executor startup or stimulus. |
+| A-010 | Moderate | Resolved | Confirmatory continuation | Sequences 34, 36, and 39 activated the frozen stop rule and resumed only after separate route requalification. |
+| A-011 | Informational | Accepted result | Confirmatory sequence 46 | A valid dropped-notification run failed after the BLE link disconnected before the completion observation. |
 
 ## A-001: exact frozen APK recovered
 
@@ -148,3 +150,60 @@ placeholders and absent UI failure captures as expected only for an invalid
 executor-boundary record that contains neither an Appium event nor a stimulus.
 This narrow exception does not relax capture checks for application-, BLE-, or
 post-stimulus records.
+
+## A-010: later stop-rule and requalification cycles
+
+Sequences 34, 36, and 39 each accumulated three consecutive pre-stimulus
+invalid attempts and activated the frozen stop rule. Collection did not advance
+past any stopped position until the hybrid route was diagnosed separately and
+two unchanged, fully captured calibration passes established repeatable
+readiness.
+
+- Sequence 34 resumed as `c034-bumble-healthy-r07-retry03` only after
+  calibrations `028` and `029` supplied the qualifying pair. The resumed run
+  passed.
+- Sequence 36 initially stopped after the base attempt and retries `01` and
+  `02`. Calibrations `037` and `038` later supplied a fully captured qualifying
+  pair. The first post-requalification confirmatory attempt, retry `03`, was
+  itself invalid before stimulus and was retained as the first occurrence in
+  the new session; retry `04` then validly passed.
+- Sequence 39 stopped after its base attempt and retries `01` and `02`.
+  Calibrations `044` and `045` supplied the later qualifying pair, after which
+  retry `03` validly passed.
+
+Several diagnostic sessions included application resets, Android Bluetooth
+cycles, clean emulator/Bumble restarts, targeted USB-device recovery, a host
+restart, and physical fixture recovery. These actions occurred between runs,
+not inside verdict-bearing executions. Calibration records preserve the
+sequence and outcome of those actions; no confirmatory verdict was converted
+from invalid to valid retrospectively.
+
+Impact: the repeated stops show substantial operational burden in this
+particular hybrid apparatus. They do not supply independent observations for a
+route failure-rate estimate, identify a universal component root cause, or
+justify discarding later valid results. Following the frozen stop and
+requalification rules preserves the planned valid-run target without selecting
+an undisclosed favorable window.
+
+## A-011: valid BLE-boundary failure at sequence 46
+
+`c046-bumble-dropped-r10-retry01` reached `SUBSCRIBED`, crossed the declared
+stimulus boundary, correctly observed the deliberate sequence-1 drop, and
+recovered to In Motion after successful delivery of sequence 2. The BLE link
+then disconnected. The fixture accepted the sequence-3 speed-zero command and
+recorded a transmit attempt, but its notification status was 5 rather than 0.
+The application remained In Motion and the completed-interval assertion timed
+out at 2,000 ms.
+
+Disposition: retain the run as `valid / fail` at the BLE boundary and count it
+toward the predeclared dropped-notification target. It was not retried because
+the outcome-bearing stimulus had been issued and no evidence invalidated the
+execution. The following scheduled injected run remained a separate plan
+position rather than a replacement.
+
+Impact: this is a confirmatory result, not an excluded apparatus attempt and
+not a claimed commercial-product defect. It supplies a concrete example of a
+failure observable only on a route that includes the physical delivery seam.
+It supports the claim that route substitution changes evidential scope; one
+observation does not estimate prevalence or establish that physical execution
+is generally superior.

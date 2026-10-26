@@ -1,177 +1,196 @@
-# Interim confirmatory results
+# Frozen confirmatory results and interpretation
 
 ## Status and scope
 
-This is a descriptive checkpoint, not the final confirmatory result. The
-frozen target remains 50 valid runs. Collection stopped under the predeclared
-rule after sequence 14 produced three consecutive invalid attempts at the same
-pre-stimulus BLE setup boundary. After a separate documented requalification
-session restored repeatable warm-lifecycle readiness, collection resumed at
-that same schedule position. No timeout, validity rule, retry allowance,
-planned order, or target count was changed in response.
+The `pilot-v1-frozen` confirmatory collection is complete. All 50 predeclared
+schedule positions have an eligible valid observation. The immutable evidence
+store contains 87 eligible confirmatory attempts plus one passing tablet run
+that remains retained but is excluded under the outcome-independent ordering
+disposition in anomaly `A-007`.
 
-The current analysis contains 32 eligible confirmatory attempts across 20
-completed schedule positions. Thirty-three confirmatory artifacts remain in
-the immutable ledger; one passing tablet artifact is retained as supporting
-evidence but excluded by the declared sequence-20 disposition:
+The eligible result contains:
 
-- 20 valid runs, all passes;
-- no valid failures;
-- 12 invalid pre-stimulus attempts, which are apparatus/setup observations and
-  not failed SUT evaluations; and
-- 11 invalids localized to the BLE boundary and one to the application
-  boundary.
+- 50 valid runs: 49 passes and one failure;
+- 37 invalid pre-stimulus attempts: 34 at the BLE boundary, two at the
+  application-readiness boundary, and one at the executor boundary; and
+- no incomplete or out-of-order schedule position.
 
-Sequence 20 was repeated only after sequence 19 completed following diagnosis
-and route requalification. The original sequence-20 pass remains immutable but
-is excluded from confirmatory counts under anomaly `A-007`; its replacement is
-the eligible result. Sequence 21 is next. Calibration, dry-run, and diagnostic
-records remain outside these counts.
+Invalid attempts did not cross the declared `stimulus-issued` boundary. They
+are apparatus-readiness observations, not failed evaluations of application
+behavior. The one valid failure did cross that boundary and therefore counts
+as an outcome under the frozen protocol. Calibration, dry-run, and diagnostic
+records remain outside the confirmatory counts.
 
 ## Condition-level accounting
 
 | Condition | Valid target | Attempts | Valid passes | Valid failures | Invalid attempts |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Injected healthy | 10 | 4 | 4 | 0 | 0 |
-| Bumble healthy | 10 | 11 | 4 | 0 | 7 |
-| Bumble dropped notification | 10 | 8 | 4 | 0 | 4 |
-| Bumble malformed notification | 10 | 5 | 4 | 0 | 1 |
-| Tablet healthy reference | 5 | 2 | 2 | 0 | 0 |
-| Tablet malformed reference | 5 | 2 | 2 | 0 | 0 |
+| Injected healthy | 10 | 11 | 10 | 0 | 1 |
+| Bumble healthy | 10 | 26 | 10 | 0 | 16 |
+| Bumble dropped notification | 10 | 21 | 9 | 1 | 11 |
+| Bumble malformed notification | 10 | 18 | 10 | 0 | 8 |
+| Tablet healthy reference | 5 | 5 | 5 | 0 | 0 |
+| Tablet malformed reference | 5 | 6 | 5 | 0 | 1 |
 
-The uneven denominators are a consequence of the frozen schedule and stop
-rule. They must not be treated as a balanced comparison or converted into
-route failure-rate estimates.
+The attempt denominators reflect adaptive retries, route requalification, and
+the frozen stopping rule. They are not balanced samples and must not be used to
+estimate general route reliability or comparative failure rates.
 
-## Descriptive timing
+## Descriptive healthy-case timing
 
-The timing summaries below use valid healthy confirmatory runs only. Values are
-milliseconds from the normalized event record.
+The following summaries use valid healthy runs only. Values are milliseconds
+from the normalized event records.
 
 | Route | Metric | n | Minimum | Median | Mean | Maximum |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Injected | Motion observation | 4 | 978.011 | 995.267 | 997.123 | 1,019.947 |
-| Injected | Completed-interval observation | 4 | 834.027 | 910.257 | 1,079.311 | 1,662.703 |
-| Bumble BLE | Setup subscription | 4 | 2,262.937 | 3,148.146 | 4,048.371 | 7,634.255 |
-| Bumble BLE | Motion observation | 4 | 790.571 | 871.764 | 882.276 | 995.005 |
-| Bumble BLE | Completed-interval observation | 4 | 805.964 | 838.533 | 865.410 | 978.609 |
-| Tablet BLE | Setup subscription | 2 | 3,926.368 | 5,183.977 | 5,183.977 | 6,441.586 |
-| Tablet BLE | Motion observation | 2 | 1,030.192 | 1,031.996 | 1,031.996 | 1,033.800 |
-| Tablet BLE | Completed-interval observation | 2 | 972.472 | 982.421 | 982.421 | 992.370 |
+| Injected | Motion observation | 10 | 833.879 | 986.668 | 1,003.458 | 1,351.169 |
+| Injected | Completed-interval observation | 10 | 766.947 | 899.979 | 992.825 | 1,662.703 |
+| Bumble BLE | Setup subscription | 10 | 2,026.416 | 2,559.811 | 3,095.181 | 7,634.255 |
+| Bumble BLE | Motion observation | 10 | 730.782 | 820.625 | 863.107 | 1,048.720 |
+| Bumble BLE | Completed-interval observation | 10 | 742.227 | 807.158 | 812.541 | 978.609 |
+| Tablet BLE | Setup subscription | 5 | 1,552.582 | 2,238.288 | 3,255.988 | 6,441.586 |
+| Tablet BLE | Motion observation | 5 | 951.009 | 1,005.078 | 995.593 | 1,033.800 |
+| Tablet BLE | Completed-interval observation | 5 | 964.594 | 972.472 | 975.362 | 992.370 |
 
-Every valid healthy confirmatory run observed both post-stimulus outcomes
-within the frozen 2,000 ms bound. The four valid hybrid subscriptions also
-occurred within the 8,000 ms setup bound, although the largest value was close
-to that bound. These are small-sample descriptive observations, not
-latency-distribution estimates.
+Every valid healthy run produced both post-stimulus observations within the
+frozen 2,000 ms hard bound. Every valid BLE healthy run subscribed within the
+8,000 ms setup bound. These values describe this apparatus and execution
+history; they are not latency-distribution estimates or evidence that one
+route is generally faster.
 
-## Diagnostic contrast after the stop
+## The valid failure at sequence 46
 
-Three out-of-band isolation runs were retained as diagnostics and never folded
-into the confirmatory ledger. The physical-tablet check
-`calibration-isolation-tablet-005` was a valid pass: subscription took
-2,444 ms, motion was observable after 991 ms, and the completed interval after
-1,571 ms. Two isolated emulator/Bumble checks were invalid before stimulus.
-One remained at `REQUESTING-PERMISSION` through the setup bound; the warm retry
-reached `CONNECTING` but not `SUBSCRIBED` within the bound.
+Confirmatory run `c046-bumble-dropped-r10-retry01` is the only valid failure.
+It subscribed in 4,384.9 ms, deliberately dropped sequence 1, and correctly
+showed no transition during the 2,000 ms negative-observation window. Healthy
+sequence 2 was then delivered successfully and produced the expected In Motion
+state with the visible sequence gap after 1,980.3 ms.
 
-This contrast localized the recurring readiness condition to the hybrid path
-under the observed configuration. It did not identify which component caused
-it or show that the tablet route is generally more reliable.
+The physical BLE link disconnected before the completion step. The fixture
+accepted the sequence-3 speed-zero command, recorded a transmit attempt, and
+reported notification status 5 rather than the status 0 seen for the preceding
+delivery. The application did not receive an accepted stop observation and
+remained In Motion through the 2,000 ms bound. The retained Bumble slice,
+fixture events, application state, Appium assertion, screenshot, UI hierarchy,
+and verdict independently preserve the failure chain. No in-run intervention
+occurred, and the run was not retried because it had crossed the frozen
+validity boundary.
 
-A later bounded requalification session retained four additional calibration
-records outside the confirmatory ledger. Two attempts connected but did not
-finish GATT discovery and subscription within 8,000 ms; no stimulus was issued.
-The next two unchanged warm lifecycles subscribed in 2,486 ms and 2,247 ms and
-passed end to end without in-run intervention. The route was therefore
-requalified under the existing invalid-attempt policy. Confirmatory retry
-`c014-retry03-bumble-healthy-r03` then subscribed in 2,490 ms, displayed motion
-after 851 ms, displayed the completed interval after 813 ms, disconnected
-cleanly, and completed sequence 14 as a valid pass.
-
-A second stop at sequence 19 triggered another separate requalification
-series. After a clean emulator/Bumble restart, five calibration lifecycles
-produced an application-invalid cold start, a pre-stimulus BLE invalid, a valid
-post-stimulus failure, a valid pass, and another valid post-stimulus failure.
-In both valid failures the fixture accepted and transmitted speed 8.0 and
-reported notification success, but the app did not display motion within
-2,000 ms. This series did not supply two consecutive unchanged passes, so it
-does not support resumed confirmatory collection. These diagnostic outcomes
-remain outside the confirmatory counts above.
-
-A later targeted session retained one capture-compromised but valid diagnostic
-failure followed by two fully captured, consecutive passes under unchanged
-conditions. The first pass subscribed in 2,376 ms and observed motion and
-completion in approximately 757 ms and 860 ms. The second subscribed in
-2,178 ms and observed the same transitions in approximately 778 ms and 805 ms.
-Those two passes requalified the route. Confirmatory retry
-`c019-retry03-bumble-dropped-r04` then passed: the deliberately dropped first
-notification produced no transition during 2,000 ms, sequence 2 recovered in
-approximately 927 ms, and sequence 3 completed the interval in approximately
-768 ms.
-
-The earlier System UI ANR is consistent with the practical risk of running a
-resource-heavy emulator on a memory-constrained host, but the retained data do
-not establish that cause. Host CPU was moderate during the later clean pass
-while available memory remained below 1 GB. Resource pressure is therefore an
-operational hypothesis, not a diagnosed mechanism.
-
-After a deliberate interval and fresh readiness check, replacement
-`c020-retry01-tablet-malformed-r02` subscribed in 1,714 ms, rejected the
-malformed first observation without entering motion, recovered on sequence 2,
-completed one interval on sequence 3, and disconnected cleanly. The original
-passing sequence-20 artifact is reported separately as supporting evidence and
-does not affect the counts above.
+This observation is not presented as a discovered defect in a commercial
+product, a BLE failure-rate estimate, or proof that physical execution is
+superior. It demonstrates something narrower and more useful: a route that
+crosses the physical delivery seam can expose a delivery-boundary outcome that
+semantic injection bypasses by construction. A passing injected test can still
+be correct for application-state logic while providing no evidence about that
+physical delivery property.
 
 ## Interpretation against the paper's claim
 
-The semantic-injection route exercised the application's state-transition
-logic smoothly, but by construction it could not expose permission handling,
-physical link establishment, GATT discovery, subscription readiness, or
-controller/bridge timing. Those observations appeared only when the test route
-crossed the physical BLE seam. In this worked example, virtualizing the test
-client therefore did not eliminate physical dependencies; it relocated them
-into the hybrid emulator/controller/fixture path.
+The ten injected healthy passes establish that the semantic route repeatedly
+exercised the selected application-state and UI behavior. The Bumble healthy
+passes establish the same downstream behavior while additionally exercising
+advertising, connection, GATT discovery, subscription, notification delivery,
+payload decoding, and lifecycle coordination. The dropped and malformed cases
+make two of those additional boundaries observable rather than merely listing
+them architecturally. The tablet results corroborate selected behavior through
+a native Android BLE controller without being pooled with the primary
+emulator comparison.
 
-That is the strongest warranted interpretation of the current evidence. It
-supports a conditional assurance argument: a hardware-attached or hybrid route
-is required when the assurance claim includes physical properties that a
-substitute route neither exercises nor represents through prior validation.
-It does not support a universal preference for physical testing.
+The central result is therefore not `physical > virtual`. It is that route
+adequacy is relative to the assurance claim:
 
-The existing semantic-injection route is already the relevant substitute; a
-second artificial "stub suite" is unnecessary. Its clean runs show what can be
-learned above the boundary, while the BLE routes show the additional classes of
-readiness and observability introduced by crossing it. Likewise, the controlled
-dropped and malformed cases demonstrate route-specific fault observability;
-they are not evidence that a commercial product defect was discovered or that
-the additional apparatus is economically justified in every setting.
+- semantic injection was adequate for the executed application-state claim;
+- it was structurally incapable of supporting a claim about BLE delivery or
+  BLE payload acceptance;
+- the Bumble route could support those additional claims when validly ready,
+  while also exposing their additional failure boundaries; and
+- the tablet reference reduced the plausibility that every observed BLE
+  behavior was solely an artifact of the emulator/HCI-bridge configuration.
 
-Calling the work merely "mobile automation" would therefore underspecify the
-system under test. The mobile UI is the interaction and observation surface,
-but the assurance target can extend through the communication path to the
-physical producer of the observed state. Whether the troubleshooting cost is
-worth paying depends on that declared assurance target, not on a blanket rule
-about cloud, virtual, or self-hosted execution.
+Virtualizing the test client did not eliminate the relevant physical
+dependencies. It relocated them into a hybrid seam comprising emulator state,
+Android Bluetooth behavior, Bumble, USB-controller ownership, radio delivery,
+peripheral firmware, and their coordinated lifecycle. A hosted orchestrator
+could schedule such a runner, but the verdict-bearing evidence would still
+depend on access to that seam.
 
-## Representative mechanism figure
+## Operational readiness without rate inflation
 
-The paired vector figure in
-[`figures/representative-lifecycles.svg`](figures/representative-lifecycles.svg)
-holds the Bumble-backed route and healthy case constant. It contrasts the
-earliest ordinary successful hybrid lifecycle with the setup-invalid attempt
-that activated the frozen stop rule. Its selection policy, caption,
-accessibility text, and reproduction command are documented in
-[`representative-timelines.md`](representative-timelines.md). The figure is an
-explanatory descent into two named records, not an additional statistical
-comparison.
+The 37 invalid pre-stimulus attempts are material because reporting only the
+49 passes and one failure would conceal the work required to establish the
+complete path. Conversely, treating those invalid attempts as SUT failures
+would claim that application behavior was tested when no outcome-bearing
+stimulus had been issued.
+
+The concentration of invalid attempts at the BLE boundary shows that local
+component checks were not sufficient to establish end-to-end readiness. A
+responsive serial daemon, live emulator, responsive controller, enabled
+Android adapter, and granted permission could coexist while the application
+still failed to reach `SUBSCRIBED` within the declared bound. The in-run
+subscription observation was therefore a necessary validity gate rather than
+a redundant health check.
+
+The records do not identify a single root cause for all invalid attempts.
+Collection used adaptive retries, stopping rules, separate requalification
+sessions, physical interventions between sessions, and a resource-constrained
+host. Attempts are consequently neither independent nor identically situated.
+The evidence supports a statement about observed apparatus burden and
+composed readiness, not a numerical reliability comparison among injection,
+Bumble, the emulator, the tablet, or physical hardware in general.
+
+## Reviewer-facing evidence model
+
+The evidence is organized as progressive disclosure rather than as a request
+that a reviewer read every system log:
+
+1. The manuscript states the claim-versus-route logic, aggregate counts,
+   timing summaries, valid failure, limitations, and disposition rules.
+2. Paper-facing tables and representative timelines let a reviewer inspect
+   the principal contrasts without opening raw traces.
+3. Generated condition and run summaries expose every eligible attempt,
+   retry, validity classification, and exclusion.
+4. A reviewer can descend from any summary row to its manifest, normalized
+   events, verdict, screenshots, serial trace, Android log, and—where
+   applicable—byte-verified Bumble slice.
+5. Source, firmware, dependency locks, apparatus description, and frozen
+   identities support independent reproduction after release.
+
+Peer review should not depend on a reviewer owning the apparatus or recreating
+the experiment. The paper must stand on a legible method and auditable retained
+evidence. A reviewer may still inspect individual records, run the software-only
+route, request clarification or artifacts, or attempt full replication; an
+artifact-evaluation venue would be more likely than ordinary manuscript review
+to execute substantial portions. The repository is designed to make such
+inspection possible, not to make hardware replication a prerequisite for
+understanding or accepting the argument.
+
+## Scope and limitations
+
+The study supports a structural, worked-example claim. It does not establish
+that physical testing is universally preferable, characterize radio-frequency
+performance, reproduce an industrial ECU or regulated device, measure economic
+benefit, or demonstrate regulatory compliance. The fixed repetition counts
+show reproducibility within this apparatus; they were not selected through a
+power analysis and do not justify population inference.
+
+The single valid failure is valuable because it was retained under a rule
+declared before its outcome was known. It should nevertheless remain a
+mechanism-demonstrating observation, not be inflated into a prevalence claim.
+Likewise, the high setup attrition is evidence that the hybrid route had an
+operational cost on this host, not proof that every hardware-attached route is
+fragile or that the cost is justified for every assurance target.
 
 ## Reproduction and provenance
 
 Run `npm run results:summarize` from `automation` to regenerate the private
-CSV/JSON package beneath
-`artifacts/evidence/pilot-v1/derived/interim-results`. The generator validates
-record structure, reconciles retries against the frozen plan, enforces the
-stimulus validity boundary, and keeps diagnostic runs separate. Sanitization
-and release packaging remain a later step; the immutable raw evidence is not
-committed to Git.
+CSV/JSON result package beneath
+`artifacts/evidence/pilot-v1/derived/interim-results`. Run
+`npm run audit:evidence:strict` to validate schemas, retry lineage, dispositions,
+event ordering, required captures, and Bumble-slice byte ranges. At completion,
+the strict audit reported zero errors and two disclosed warnings across 2,587
+events, with 65 Bumble slices byte-verified.
+
+The remaining warnings correspond to anomalies `A-002` and `A-004` and do not
+alter a confirmatory verdict. Sanitization and public release packaging remain
+separate work; the immutable raw evidence is intentionally excluded from the
+development Git history.

@@ -2,15 +2,15 @@
 
 ## Outcome
 
-The updated 2026-10-25 audit completed with **zero integrity errors, two warnings,
-and one expected post-freeze observation**. The confirmatory result accounting
-in `docs/interim-results.md` remains supported by the retained evidence.
+The completed 2026-10-25 audit reports **zero integrity errors, two warnings,
+and one expected post-freeze observation**. The final confirmatory result
+accounting in `docs/interim-results.md` is supported by the retained evidence.
 
 The audit is reproducible with:
 
 ```powershell
 cd automation
-npm run audit:evidence
+npm run audit:evidence:strict
 ```
 
 The machine report and checksum inventory are generated privately under
@@ -21,14 +21,14 @@ because the current `artifacts` tree is the untouched private evidence layer.
 
 | Check | Result |
 | --- | ---: |
-| Run directories examined | 120 |
-| Retained confirmatory attempt records | 33 |
+| Run directories examined | 209 |
+| Retained confirmatory attempt records | 88 |
 | Confirmatory records excluded by declared disposition | 1 |
-| Normalized events validated | 1,522 |
-| Run records valid against the version-1 schemas | 120 |
-| Confirmatory Bumble slices compared with source-session bytes | 24 |
-| Files entered in the current SHA-256 inventory | 318 |
-| Duplicate-content groups among confirmatory artifacts | 8 |
+| Normalized events validated | 2,587 |
+| Run records valid against the version-1 schemas | 209 |
+| Confirmatory Bumble slices compared with source-session bytes | 65 |
+| Files entered in the current SHA-256 inventory | 839 |
+| Duplicate-content groups among confirmatory artifacts | 9 |
 
 All run manifests, event streams, and verdicts parsed successfully. The audit
 checked schema conformance, run and event identities, contiguous event indices,
@@ -69,13 +69,13 @@ debug build remains distinct and was not substituted.
 
 ## Confirmatory record relationships
 
-All 33 retained confirmatory attempts map to frozen schedule entries. Their route, case,
-and repetition fields agree with the plan; retry manifests and verdicts agree;
-and every retry points to the immediately preceding attempt. The disposition
-registry excludes the original passing sequence-20 record while retaining it
-as supporting evidence and identifies the eligible post-requalification
-replacement at the same frozen schedule position. Sequences 1 through 20 are
-complete; sequence 21 is next.
+All 88 retained confirmatory records map to frozen schedule entries. Of these,
+87 are eligible attempts and one is the excluded-but-retained original
+sequence-20 pass. Their route, case, and repetition fields agree with the plan;
+retry manifests and verdicts agree; and every retry points to the immediately
+preceding attempt. The disposition registry identifies the eligible
+post-requalification replacement at sequence 20. All 50 schedule positions are
+complete with 50 valid outcomes: 49 passes and one failure.
 
 Every valid run crosses the declared `stimulus-issued` boundary, and every
 invalid run remains before it. Final normalized events agree with the stored
@@ -85,7 +85,7 @@ only confirmatory record missing its usual failure screenshot and UI hierarchy;
 its Appium, `logcat`, serial, Bumble, event, and verdict evidence remains
 available.
 
-All 24 Bumble-backed confirmatory attempts contain capture metadata and a
+All 65 audited Bumble-backed confirmatory captures contain metadata and a
 retained Bumble slice. Each slice has the declared length and is byte-identical
 to the corresponding offset range in its named source session log.
 
@@ -108,7 +108,7 @@ frozen pilot.
 
 ## Duplicate-content review
 
-Eight duplicate hash groups were found. They are deterministic serial
+Nine duplicate hash groups were found. They are deterministic serial
 transcripts, empty injected-route serial logs, or repeated captures of the same
 visible setup state. No manifests, event streams, verdicts, Bumble slices,
 Appium logs, or `logcat` records are duplicated across confirmatory run
@@ -118,10 +118,10 @@ run records.
 ## Interpretation
 
 The audit does not convert invalid setup attempts into application failures or
-claim that the still-in-progress 50-run matrix is complete. It establishes that
-the interim counts, timings, route distinctions, stop-rule account, documented
-requalification, valid completion through sequence 20, and the explicit
-sequence-20 exclusion/replacement disposition are traceable to internally
-consistent retained records. Remaining warnings concern one confirmatory
-failure-capture omission and one supporting-run timestamp reversal; both are
-disclosed in `docs/anomaly-ledger.md`.
+interpret the one valid failure beyond its retained boundary evidence. It
+establishes that the final counts, timings, route distinctions, stop-rule
+accounts, requalifications, sequence-20 disposition, and completion of all 50
+planned positions are traceable to internally consistent records. Remaining
+warnings concern one invalid confirmatory attempt's missing failure capture and
+one supporting-run timestamp reversal; both are disclosed in
+`docs/anomaly-ledger.md`.

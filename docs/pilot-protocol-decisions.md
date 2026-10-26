@@ -687,3 +687,24 @@ replacement validly passed. It is the eligible sequence-20 result, while the
 original pass remains available solely as supporting evidence through
 `automation/evidence/dispositions/pilot-v1.json`. Sequence 21 is next.
 
+## Final confirmatory completion
+
+The remaining frozen schedule was completed on 2026-10-25. The final eligible
+accounting contains 87 attempts across all 50 planned positions: 50 valid runs
+(49 passes and one failure) and 37 invalid pre-stimulus attempts. The separately
+retained original sequence-20 pass remains excluded under `A-007`, so the
+private evidence store contains 88 confirmatory-classified artifacts in total.
+
+Later three-occurrence stops at sequences 34, 36, and 39 were handled through
+the same separate-diagnosis and two-pass requalification rule; see anomaly
+`A-010`. No timeout, validity boundary, target, or planned case order was
+changed. Sequence 46 supplied the sole valid failure: after successful dropped-
+notification recovery, the BLE link disconnected before the completion
+observation was delivered. It remains counted without retry under anomaly
+`A-011`.
+
+The generated result now reports `collectionStatus: complete` and no next
+incomplete sequence. Final interpretation is maintained in
+`docs/interim-results.md`; the historical checkpoint sections above remain to
+preserve the decisions and state visible at each interruption.
+
