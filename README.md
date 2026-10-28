@@ -110,11 +110,18 @@ It separates execution validity, ordinary test outcome, and claim disposition
 across two claims and two passing routes; it is not proposed as a standard.
 
 For daily development, open [SeamScope.code-workspace](SeamScope.code-workspace)
-and follow [docs/vscode-workflow.md](docs/vscode-workflow.md). The workspace
-opens the executable fixture and the separate IST paper notebook together.
+and follow [docs/vscode-workflow.md](docs/vscode-workflow.md).
+
+The checked-in Android debug keystore is a conventional development key that
+supports reproducible local debug builds. It must not be used to sign a
+production release.
 
 ## Project rule
 
 > Include no component unless it changes the evidence claim.
 
 Internally, this is known as the “enough almonds” rule.
+
+## License
+
+SeamScope is available under the [MIT License](LICENSE).

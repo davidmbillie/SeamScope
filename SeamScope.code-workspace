@@ -3,10 +3,6 @@
     {
       "name": "SeamScope",
       "path": "."
-    },
-    {
-      "name": "IST paper",
-      "path": "../ist"
     }
   ],
   "settings": {

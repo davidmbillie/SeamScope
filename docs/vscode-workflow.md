@@ -1,8 +1,8 @@
 # VS Code workflow
 
 Open [SeamScope.code-workspace](../SeamScope.code-workspace) rather than an
-individual source directory. It presents the executable fixture and the IST
-paper notebook in one window while keeping their files separate.
+individual source directory. It presents the executable fixture as a named
+workspace with the repository's recommended settings, tasks, and extensions.
 
 ## Extensions
 
