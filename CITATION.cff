@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use SeamScope or its pilot evidence package, please cite this software record."
+title: "SeamScope: A Minimal Cyber-Physical Testbed for Route-Relative Test Evidence"
+type: software
+authors:
+  - family-names: "Billie"
+    given-names: "David"
+    affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0006-9205-1391"
+abstract: >-
+  SeamScope is a minimal cyber-physical mobile testbed for examining what an
+  automated test result is evidence of when a shared Appium scenario executes
+  through either a software injection seam or a serial-controlled physical
+  Bluetooth Low Energy route. The archived research artifact includes the
+  source, frozen protocol, route-relative claim-assessment companion, and a
+  sanitized pilot evidence package.
+version: 1.0.0
+doi: "10.5281/zenodo.23903535"
+license: MIT
+repository-code: "https://github.com/davidmbillie/SeamScope"
+url: "https://doi.org/10.5281/zenodo.23903535"
+keywords:
+  - "cyber-physical systems"
+  - "software testing"
+  - "assurance evidence"
+  - "hardware-in-the-loop"
+  - "mobile testing"
+  - "Bluetooth Low Energy"
+  - "Appium"
+  - "test automation"
+

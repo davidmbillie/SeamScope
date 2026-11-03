@@ -1,4 +1,4 @@
-# SeamScope pilot-v1 evidence package
+# SeamScope v1.0.0 pilot evidence package
 
 This package is the sanitized, progressively disclosed evidence companion for
 the SeamScope pilot study. It lets a reader verify the reported counts and
@@ -31,6 +31,7 @@ and study counts. `structured-equivalence.json` proves that the normalized run
 records are byte-identical to their private sources. `checksums.sha256`
 identifies every released file.
 
-This is a release candidate. The final archive should be rebuilt from the
-clean release commit and deposited with a DOI when the manuscript is ready.
+This is the v1.0.0 evidence companion archived under
+<https://doi.org/10.5281/zenodo.23903535>. Its package manifest identifies the
+exact tagged source revision from which it was built.
 

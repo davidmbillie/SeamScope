@@ -10,7 +10,10 @@ const automationRoot = path.resolve(path.dirname(scriptPath), '..');
 const repoRoot = path.resolve(automationRoot, '..');
 const studyRoot = path.join(repoRoot, 'artifacts', 'evidence', 'pilot-v1');
 const releaseParent = path.join(repoRoot, 'artifacts', 'release');
-const releaseRoot = path.join(releaseParent, 'seamscope-pilot-v1-evidence');
+const releaseVersion = '1.0.0';
+const releaseTag = `v${releaseVersion}`;
+const releaseDoi = '10.5281/zenodo.23903535';
+const releaseRoot = path.join(releaseParent, `seamscope-v${releaseVersion}-evidence`);
 const confirmatoryCsv = path.join(studyRoot, 'derived', 'interim-results', 'confirmatory-runs.csv');
 const normalizedNames = ['manifest.json', 'events.jsonl', 'capture.json', 'verdict.json'];
 const representativeExtras = new Map([
@@ -258,8 +261,11 @@ async function build() {
   const valid = eligible.filter(row => row.validity === 'valid');
   const manifest = {
     schemaVersion: '1',
-    packageId: 'seamscope-pilot-v1-evidence',
-    releaseStatus: 'candidate',
+    packageId: `seamscope-v${releaseVersion}-evidence`,
+    releaseStatus: 'final',
+    releaseVersion,
+    releaseTag,
+    doi: releaseDoi,
     sourceRepository: 'https://github.com/davidmbillie/SeamScope',
     sourceRevision: git('rev-parse', 'HEAD'),
     sourceTreeDirty: git('status', '--porcelain').length > 0,
@@ -288,6 +294,9 @@ async function build() {
 async function verify({writeChecksums = false} = {}) {
   if (!(await exists(releaseRoot))) throw new Error(`Release package not found: ${releaseRoot}`);
   const manifest = JSON.parse(await readFile(path.join(releaseRoot, 'package-manifest.json'), 'utf8'));
+  if (manifest.releaseStatus !== 'final') throw new Error('Package is not marked final');
+  if (manifest.releaseVersion !== releaseVersion) throw new Error('Release version mismatch');
+  if (manifest.doi !== releaseDoi) throw new Error('Release DOI mismatch');
   if (manifest.studyCounts.confirmatoryAttemptsRetained !== 88) throw new Error('Attempt count is not 88');
   if (manifest.studyCounts.protocolEligibleAttempts !== 87) throw new Error('Eligible count is not 87');
   if (manifest.studyCounts.validOutcomes !== 50) throw new Error('Valid outcome count is not 50');

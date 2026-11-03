@@ -121,15 +121,17 @@ Build and verify the progressively disclosed release companion with:
 ```powershell
 npm run release:evidence:build
 npm run release:evidence:verify
+npm run release:evidence:archive
 ```
 
 The ignored output is written to
-`artifacts/release/seamscope-pilot-v1-evidence`. The builder preserves all
+`artifacts/release/seamscope-v1.0.0-evidence`. The builder preserves all
 normalized confirmatory records byte-for-byte, sanitizes only selected
 representative text traces, checks every claim-assessment artifact reference,
 validates the frozen binaries, scans for prohibited identifiers, and writes a
 complete checksum inventory. See `release/SANITIZATION.md` for the inclusion
-boundary.
+boundary. The archive command creates the portable ZIP and its SHA-256 sidecar
+only after re-verifying the package and every archived file.
 
 Generate and verify the paper-facing evidence chain for the sole valid
 confirmatory failure:

@@ -1,5 +1,7 @@
 # SeamScope
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23903535.svg)](https://doi.org/10.5281/zenodo.23903535)
+
 SeamScope is a minimal, reproducible cyber-physical mobile testbed for studying
 **what a test result is evidence of**.
 
@@ -108,6 +110,18 @@ an illustrative machine-readable companion in
 [automation/evidence/claim-assessments/](automation/evidence/claim-assessments/README.md).
 It separates execution validity, ordinary test outcome, and claim disposition
 across two claims and two passing routes; it is not proposed as a standard.
+
+## Citation
+
+The citable v1.0.0 research artifact combines the tagged source snapshot with
+the sanitized pilot evidence package:
+
+> David Billie. *SeamScope: A Minimal Cyber-Physical Testbed for
+> Route-Relative Test Evidence*. Version 1.0.0. Zenodo.
+> <https://doi.org/10.5281/zenodo.23903535>
+
+Machine-readable citation metadata are available in
+[`CITATION.cff`](CITATION.cff).
 
 For daily development, open [SeamScope.code-workspace](SeamScope.code-workspace)
 and follow [docs/vscode-workflow.md](docs/vscode-workflow.md).
