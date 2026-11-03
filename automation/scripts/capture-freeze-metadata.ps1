@@ -3,7 +3,8 @@ param(
     [ValidateSet('freeze-candidate', 'frozen')]
     [string]$Status = 'freeze-candidate',
     [string]$EmulatorSerial = 'emulator-5554',
-    [string]$TabletSerial = '<TABLET_SERIAL>',
+    [string]$TabletSerial = $env:SEAMSCOPE_TABLET_SERIAL,
+    [string]$ControllerTransport = $env:SEAMSCOPE_BUMBLE_CONTROLLER_TRANSPORT,
     [string]$ApkPath = '..\apps\mobile\android\app\build\outputs\apk\debug\app-debug.apk',
     [string]$FirmwareBinaryPath = ''
 )
@@ -11,6 +12,13 @@ param(
 $ErrorActionPreference = 'Stop'
 $automationRoot = Split-Path -Parent $PSScriptRoot
 $repositoryRoot = Split-Path -Parent $automationRoot
+
+if ([string]::IsNullOrWhiteSpace($TabletSerial)) {
+    throw 'Provide -TabletSerial or set SEAMSCOPE_TABLET_SERIAL.'
+}
+if ([string]::IsNullOrWhiteSpace($ControllerTransport)) {
+    throw 'Provide -ControllerTransport or set SEAMSCOPE_BUMBLE_CONTROLLER_TRANSPORT.'
+}
 
 function Resolve-RepositoryPath {
     param([string]$Value)
@@ -160,7 +168,7 @@ $metadata = [ordered]@{
         bumble = Get-CommandText $bumblePython @('-c', "import importlib.metadata as m; print(m.version('bumble'))")
         bumbleBridge = [ordered]@{
             hostTransport = 'android-netsim:_:8877,mode=controller'
-            controllerTransport = 'usb:0B05:190E/<CONTROLLER_SERIAL>'
+            controllerTransport = $ControllerTransport
         }
         adb = Get-CommandText 'adb' @('version')
         emulator = if ($emulatorVersion) { $emulatorVersion } else { $emulatorDetails }

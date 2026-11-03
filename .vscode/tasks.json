@@ -236,14 +236,12 @@
     {
       "id": "androidDeviceId",
       "type": "promptString",
-      "description": "Android device ID from adb devices",
-      "default": "<TABLET_SERIAL>"
+      "description": "Android device ID from adb devices"
     },
     {
       "id": "serialPort",
       "type": "promptString",
-      "description": "Arduino serial port",
-      "default": "COM3"
+      "description": "Arduino serial port"
     }
   ]
 }

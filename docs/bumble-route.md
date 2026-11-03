@@ -21,11 +21,12 @@ control channel are physical.
 - Android emulator `33.1.21.0`, `Pixel_6` AVD, Android 14 / API 34, x86_64;
 - Bumble `0.0.179.dev18+g9bf2e03`;
 - Bumble host transport `android-netsim:_:8877,mode=controller`;
-- Bumble controller transport `usb:0B05:190E/<CONTROLLER_SERIAL>` (ASUS
-  USB-BT500 hardware identity, rather than enumeration order);
+- Bumble controller transport selected by USB vendor/product identity and a
+  runtime-supplied controller serial (ASUS USB-BT500 hardware identity, rather
+  than enumeration order);
 - Realtek RTL8761BU controller firmware `rtl8761bu_fw.bin`, 44,484 bytes,
   firmware version `0xDFC6D922`, project ID `0x000E`;
-- Nano ESP32 on `COM3`; and
+- Nano ESP32 on a runtime-selected Windows serial port; and
 - the same WebdriverIO/Appium scenario and `SerialBleSignalRig` used by the
   physical-tablet route.
 
@@ -46,15 +47,17 @@ Start the bridge before starting the emulator:
 ```powershell
 $env:BUMBLE_RTK_FIRMWARE_DIR = "$PWD\.cache\rtk_fw"
 $env:BUMBLE_LOGLEVEL = "WARNING"
+$env:SEAMSCOPE_BUMBLE_CONTROLLER_TRANSPORT = `
+  "usb:0B05:190E/<controller-serial>"
 bumble-hci-bridge `
   android-netsim:_:8877,mode=controller `
-  usb:0B05:190E/<CONTROLLER_SERIAL>
+  $env:SEAMSCOPE_BUMBLE_CONTROLLER_TRANSPORT
 ```
 
-When a persistent serial daemon owns COM3, the test runner connects to its TCP
+When a persistent serial daemon owns the selected serial port, the test runner connects to its TCP
 endpoint with `SEAMSCOPE_SERIAL_DAEMON_PORT` (currently `8765`). Do not put that
 TCP port in `SEAMSCOPE_SERIAL_PORT`; the latter names a Windows device such as
-`COM3` and is used only when the runner owns the serial bridge directly. Daemon
+`COM7` and is used only when the runner owns the serial bridge directly. Daemon
 mode no longer requires `SEAMSCOPE_SERIAL_PORT` to be set.
 
 In a second terminal, start exactly one emulator instance:

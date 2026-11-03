@@ -31,6 +31,15 @@ const representativeExtras = new Map([
 const textExtensions = new Set(['.json', '.jsonl', '.log', '.md', '.txt', '.xml']);
 
 const toPosix = value => value.split(path.sep).join('/');
+const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const pathExpression = value => {
+  if (!value) return null;
+  return new RegExp(value.split(/[\\/]+/).map(escapeRegExp).join('[\\\\/]'), 'gi');
+};
+const privateIdentifiers = (process.env.SEAMSCOPE_PRIVATE_IDENTIFIERS ?? '')
+  .split(',')
+  .map(value => value.trim())
+  .filter(Boolean);
 
 async function exists(filePath) {
   try {
@@ -88,23 +97,26 @@ function sanitizeText(input) {
   };
 
   replace('ansi-terminal-control', /\x1b\[[0-?]*[ -/]*[@-~]/g, '');
-  replace('repository-path', /C:[\\/]git[\\/]paper[\\/]SeamScope/gi, '<REPO_ROOT>');
+  for (const [id, value, token] of [
+    ['repository-path', repoRoot, '<REPO_ROOT>'],
+    ['android-sdk-path', process.env.ANDROID_HOME ?? process.env.ANDROID_SDK_ROOT, '<ANDROID_SDK>'],
+    ['local-app-data-path', process.env.LOCALAPPDATA, '<LOCAL_APP_DATA>'],
+    ['user-home-path', os.homedir(), '<USER_HOME>'],
+    ['avd-home-path', process.env.ANDROID_AVD_HOME, '<AVD_HOME>'],
+  ]) {
+    const expression = pathExpression(value);
+    if (expression) replace(id, expression, token);
+  }
   replace(
-    'android-sdk-path',
-    /C:[\\/]Users[\\/]david[\\/]AppData[\\/]Local[\\/]Android[\\/]Sdk/gi,
-    '<ANDROID_SDK>',
+    'other-absolute-windows-path',
+    /\b[A-Z]:[\\/][^\s"'<>|]*/gi,
+    '<LOCAL_PATH>',
   );
-  replace(
-    'local-app-data-path',
-    /C:[\\/]Users[\\/]david[\\/]AppData[\\/]Local/gi,
-    '<LOCAL_APP_DATA>',
-  );
-  replace('user-home-path', /C:[\\/]Users[\\/]david/gi, '<USER_HOME>');
-  replace('avd-home-path', /D:[\\/]SeamScope[\\/]android-avd/gi, '<AVD_HOME>');
-  replace('tablet-serial', /<TABLET_SERIAL>/gi, '<TABLET_SERIAL>');
-  replace('controller-serial', /<CONTROLLER_SERIAL>/gi, '<CONTROLLER_SERIAL>');
-  replace('emulator-serial', /emulator-5554/gi, '<EMULATOR_SERIAL>');
-  replace('serial-port', /\bCOM3\b/gi, '<SERIAL_PORT>');
+  replace('emulator-serial', /\bemulator-\d+\b/gi, '<EMULATOR_SERIAL>');
+  replace('serial-port', /\bCOM\d+\b/gi, '<SERIAL_PORT>');
+  for (const identifier of privateIdentifiers) {
+    replace('private-identifier', new RegExp(escapeRegExp(identifier), 'gi'), '<PRIVATE_IDENTIFIER>');
+  }
   if (os.hostname()) {
     replace('host-name', new RegExp(os.hostname().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), '<HOST>');
   }
@@ -318,15 +330,15 @@ async function verify({writeChecksums = false} = {}) {
   }
 
   const forbidden = [
-    ['user-home', /C:[\\/]Users[\\/]david/gi],
-    ['repository-path', /C:[\\/]git[\\/]paper[\\/]SeamScope/gi],
-    ['tablet-serial', /<TABLET_SERIAL>/gi],
-    ['controller-serial', /<CONTROLLER_SERIAL>/gi],
-    ['emulator-serial', /emulator-5554/gi],
-    ['physical-serial-port', /\bCOM3\b/gi],
+    ['absolute-windows-path', /\b[A-Z]:[\\/]/g],
+    ['emulator-serial', /\bemulator-\d+\b/gi],
+    ['physical-serial-port', /\bCOM\d+\b/gi],
     ['incidental-ble-name', /\[Complete Local Name\]:\s*"(?!SeamScope Peripheral")[^"]*"/g],
     ['bluetooth-address', /\b(?!00:00:00:00:00:00\b)(?:[0-9A-F]{2}:){5}[0-9A-F]{2}\b/gi],
   ];
+  for (const identifier of privateIdentifiers) {
+    forbidden.push(['private-identifier', new RegExp(escapeRegExp(identifier), 'gi')]);
+  }
   const files = await walk(releaseRoot);
   for (const file of files.filter(file => textExtensions.has(path.extname(file).toLowerCase()))) {
     const text = await readFile(file, 'utf8');
