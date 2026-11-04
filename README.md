@@ -35,6 +35,11 @@ Implemented in the first slice:
   controller, and the Nano ESP32; and
 - evidence-boundary and clean-room design notes.
 
+Here, [Bumble](https://google.github.io/bumble/) refers to the open-source
+Python Bluetooth stack for emulation, testing, and experimentation—not the
+dating application. SeamScope uses its HCI bridge to connect the Android
+emulator's Bluetooth host stack to a physical USB Bluetooth controller.
+
 ## Architecture
 
 ```text
