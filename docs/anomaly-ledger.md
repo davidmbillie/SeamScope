@@ -10,7 +10,7 @@ or interpretation, not the apparent inconvenience of the underlying event.
 | A-002 | Low | Accepted | Confirmatory sequence 6 | First invalid attempt lacks the usual failure screenshot and UI hierarchy. |
 | A-003 | Low | Compatibility documented | Evidence schema | Nine events use historical literal `malform` rather than canonical `malformed`. |
 | A-004 | Low | Accepted | Supporting calibration | One retrospectively appended intervention event has an earlier action timestamp than its preceding event. |
-| A-005 | Informational | Accepted | Confirmatory artifacts | Eight duplicate-content groups are explained by deterministic outputs and empty pre-executor placeholders. |
+| A-005 | Informational | Accepted | Confirmatory artifacts | Nine duplicate-content groups are explained by deterministic outputs, empty placeholders, and repeated setup-state captures. |
 | A-006 | Informational | Resolved | Freeze identity | Current automation lock differs post-freeze; exact frozen lock is retained in the declared Git baseline. |
 | A-007 | Moderate | Resolved | Confirmatory ordering | Sequence 20 was executed after sequence 19 activated the stop rule; the original pass is excluded and a post-requalification replacement is eligible. |
 | A-008 | Low | Accepted | Supporting calibration | Calibration 010 crossed stimulus with a path-resolution error that prevented its normal per-run capture. |
@@ -75,12 +75,12 @@ event stream contains a host-time reversal.
 
 ## A-005: explainable duplicate-content groups
 
-The checksum inventory found repeated deterministic serial transcripts for
-identical scripted cases, empty serial logs for the injected route, empty
-pre-executor placeholders for the first sequence-21 attempt, and one UI
-hierarchy shared by two attempts stopped in the same visible state. No
-manifest, event stream, verdict, Bumble slice, Appium log, or `logcat` record is
-duplicated across confirmatory identities.
+The checksum inventory found nine groups: repeated deterministic serial
+transcripts for identical scripted cases; one zero-byte group containing empty
+injected-route serial logs and the first sequence-21 attempt's pre-executor
+placeholders; and two UI-hierarchy hash groups containing repeated captures of
+the same visible setup state. No manifest, event stream, verdict, Bumble slice,
+Appium log, or `logcat` record is duplicated across confirmatory identities.
 
 Impact: the duplicates reflect repeated deterministic output rather than
 duplicated experimental records.

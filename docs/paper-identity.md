@@ -45,9 +45,13 @@ SeamScope does not establish:
 - universal superiority of physical testing; or
 - cross-domain validity of the proposed decision procedure.
 
-## IST gate
+## Historical IST drafting gate
 
-Draft an IST Short Communication only if the work can demonstrate at least one
-non-obvious classification produced by the procedure and obtain independent
-evidence that its decision records expose or resolve ambiguity better than an
-unstructured "mock, simulator, or hardware" judgment.
+During early scoping, a prospective gate required both a non-obvious
+classification and independent evidence that structured decision records
+resolved ambiguity better than an unstructured "mock, simulator, or hardware"
+judgment. The final manuscript adopted a narrower contribution: it demonstrates
+different claim dispositions for equal passing outcomes and supplies an
+inspectable, machine-readable record, while explicitly not claiming independent
+analyst agreement or improved decisions. An independent reader comparison is
+future evaluation, not a requirement satisfied by the v1.0.0 artifact.

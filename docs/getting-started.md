@@ -54,7 +54,10 @@ $env:SEAMSCOPE_SERIAL_PORT = "COM5" # serial route only
 npm run test:e2e
 ```
 
-The injected route is executable before the BLE adapter is added. The serial
-route currently validates the runner-to-peripheral control boundary; its full
-end-to-end scenario intentionally remains gated on the native Android BLE
-adapter.
+The native Android BLE adapter is implemented. The injected route requires no
+BLE hardware. The serial/BLE route requires the Nano ESP32 and has been
+validated end to end with both a physical Android tablet and an Android
+emulator connected through Bumble to a physical USB Bluetooth controller. See
+[bumble-route.md](bumble-route.md) for the validated hybrid configuration,
+additional prerequisites, and the distinction between historical validation
+records and a fresh local execution.
