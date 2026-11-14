@@ -2,16 +2,17 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23903535.svg)](https://doi.org/10.5281/zenodo.23903535)
 
-SeamScope is a minimal, reproducible cyber-physical mobile testbed for studying
-**what a test result is evidence of**.
+SeamScope is a minimal, reproducible mobile-facing cyber-physical testbed for
+exploring **selective client substitution** and the evidence retained by
+different automated-test routes.
 
 The same Appium scenario can drive two signal routes:
 
 - an **injected route** that supplies a semantic observation through a software
   seam; and
-- a **serial/BLE route** in which a hardware-attached runner commands an Arduino
-  over USB serial and the Arduino delivers the observation to an Android app over
-  Bluetooth Low Energy.
+- a **hybrid Bumble/HCI route** in which a hardware-attached runner commands an
+  Arduino over USB serial while an Android emulator receives its Bluetooth Low
+  Energy observations through a Bumble HCI bridge and physical USB controller.
 
 The routes may produce the same visible behavior, but they exercise different
 parts of the evidence path. SeamScope exists to make that difference inspectable.
@@ -35,30 +36,61 @@ Implemented in the first slice:
   controller, and the Nano ESP32; and
 - evidence-boundary and clean-room design notes.
 
-Here, [Bumble](https://google.github.io/bumble/) refers to the open-source
-Python Bluetooth stack for emulation, testing, and experimentation—not the
-dating application. SeamScope uses its HCI bridge to connect the Android
-emulator's Bluetooth host stack to a physical USB Bluetooth controller.
+### Bumble and the hybrid route
+
+[Bumble](https://google.github.io/bumble/) is an open-source Python Bluetooth
+stack and toolkit for emulation, testing, experimentation, and interaction
+with virtual or physical Bluetooth controllers. Among its supported
+configurations, Bumble can expose an HCI transport between the Android
+emulator's Bluetooth host stack and an external controller.
+
+SeamScope adopts Bumble's documented
+[Android HCI-bridge configuration](https://google.github.io/bumble/platforms/android.html#connecting-a-custom-virtual-controller)
+and the topology described in
+[Use Case 6](https://google.github.io/bumble/use_cases/use_case_6.html):
+
+```text
+Android emulator Bluetooth host
+        <-> Bumble HCI bridge
+        <-> physical USB Bluetooth controller
+        <-> BLE radio
+        <-> Nano ESP32 peripheral
+```
+
+This is adopted infrastructure, not a bridge mechanism introduced by
+SeamScope. Its experimental role is to substitute the physical Android client
+while retaining a configured physical controller, radio path, and peripheral
+in the route observed by the application. The exact tested configuration,
+commands, lifecycle requirements, and observed readiness failures are recorded
+in [docs/bumble-route.md](docs/bumble-route.md); Bumble's own documentation
+remains the authoritative installation and platform reference.
 
 ## Architecture
 
 ```text
-                         same scenario
-                              |
-                    +---------+---------+
-                    |                   |
-            InjectedSignalRig    SerialBleSignalRig
-                    |                   |
-             Android deep link       USB serial
-                    |                   |
-             React Native app    Arduino peripheral
-                    |                   |
-                    |              BLE observation
-                    +---------+---------+
-                              |
-                      observable app UI
-                              |
-                    Appium / UiAutomator2
+                               same scenario
+                                    |
+                      +-------------+-------------+
+                      |                           |
+              InjectedSignalRig           SerialBleSignalRig
+                      |                           |
+               Android deep link             USB serial
+                      |                           |
+                      |                   Nano ESP32 peripheral
+                      |                           |
+                      |                        BLE radio
+                      |                           |
+                      |              physical USB BLE controller
+                      |                           |
+                      |                  Bumble HCI bridge
+                      |                           |
+                      |             Android emulator Bluetooth host
+                      |                           |
+                      +------------> React Native app
+                                          |
+                                  observable app UI
+                                          |
+                                Appium / UiAutomator2
 ```
 
 Serial is the laboratory control channel. BLE is part of the physical evidence
